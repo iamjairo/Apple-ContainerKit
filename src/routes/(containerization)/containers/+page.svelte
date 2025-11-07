@@ -73,8 +73,7 @@
         <div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <ContainerList
                 data={showOnlyRunningContainers ? runningContainers : allContainers}
-                columns={columns({ getAllContainerList, deleteContainer })}
-                getAllContainers={getAllContainerList}
+                columns={columns({ deleteContainer })}
                 bind:showOnlyRunningContainers
             />
         </div>

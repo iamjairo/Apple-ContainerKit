@@ -128,7 +128,7 @@
         <Sidebar.Menu>
             <Sidebar.MenuItem>
                 <Sidebar.MenuButton
-                    class="hover:bg-transparent data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group"
+                    class="hover:bg-transparent data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group/logo"
                     size="lg"
                 >
                     <div
@@ -136,7 +136,7 @@
                     >
                         <img
                             src="/logo.png"
-                            class="rounded-xs scale-125 transform-3d transition-all duration-500 group-hover:scale-150"
+                            class="rounded-xs scale-125 transform-3d transition-all duration-500 group-hover/logo:scale-150"
                             alt="container kit logo"
                         />
                     </div>

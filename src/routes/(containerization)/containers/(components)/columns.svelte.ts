@@ -8,14 +8,10 @@ import ContainerListActions from './container-list-actions.svelte';
 import { createRawSnippet } from 'svelte';
 
 type ContainerColumnProps = {
-    getAllContainerList: () => Promise<void>;
     deleteContainer: (id: string) => Promise<void>;
 };
 
-export function columns({
-    getAllContainerList,
-    deleteContainer
-}: ContainerColumnProps): ColumnDef<ContainerClient>[] {
+export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<ContainerClient>[] {
     return [
         {
             id: 'select',
@@ -84,7 +80,6 @@ export function columns({
                 return renderComponent(ContainerListActions, {
                     status,
                     id,
-                    getAllContainerList,
                     deleteContainer
                 });
             }

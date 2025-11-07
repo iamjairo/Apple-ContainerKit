@@ -53,6 +53,9 @@ importers:
       drizzle-orm:
         specifier: ^0.44.3
         version: 0.44.3(@libsql/client@0.15.10)(gel@2.1.1)
+      pretty-bytes:
+        specifier: ^7.1.0
+        version: 7.1.0
       runed:
         specifier: ^0.28.0
         version: 0.28.0(svelte@5.36.2)
@@ -1709,6 +1712,10 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  pretty-bytes@7.1.0:
+    resolution: {integrity: sha512-nODzvTiYVRGRqAOvE84Vk5JDPyyxsVk0/fbA/bq7RqlnhksGpset09XTxbpvLTIjoaF7K8Z8DG8yHtKGTPSYRw==}
+    engines: {node: '>=20'}
+
   promise-limit@2.7.0:
     resolution: {integrity: sha512-7nJ6v5lnJsXwGprnGXga4wx6d1POjvi5Qmf1ivTRxTjH4Z/9Czja/UCMLVmB9N93GeWOU93XaFaEt6jbuoagNw==}
 
@@ -3307,6 +3314,8 @@ snapshots:
       svelte: 5.36.2
 
   prettier@3.5.3: {}
+
+  pretty-bytes@7.1.0: {}
 
   promise-limit@2.7.0: {}
 

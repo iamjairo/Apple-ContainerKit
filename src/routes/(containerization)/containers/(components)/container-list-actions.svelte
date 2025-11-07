@@ -17,11 +17,10 @@
     type Props = {
         status: ContainerClient['status'];
         id: string;
-        getAllContainerList: () => Promise<void>;
         deleteContainer: (id: string) => Promise<void>;
     };
 
-    let { status, id, getAllContainerList, deleteContainer }: Props = $props();
+    let { status, id, deleteContainer }: Props = $props();
 
     let disableActions = $state(false);
     let startingContainer = $state(false);
@@ -32,11 +31,9 @@
         startingContainer = disableActions = true;
         const message = status === 'running' ? 'stopped' : 'started';
         const output = status === 'running' ? await stopContainer(id) : await startContainer(id);
-        await getAllContainerList();
         startingContainer = disableActions = false;
         if (output.error) {
-            toast.error(output.message);
-            console.error(output);
+            toast.error(output.stderr);
             return;
         }
 
@@ -66,9 +63,9 @@
                         size="icon"
                         onclick={handleContainerRunningState}
                         class={[
-                            status === 'running'
-                                ? 'text-red-400 hover:bg-red-100 hover:text-red-400'
-                                : 'text-green-400'
+                            status === 'stopped'
+                                ? 'text-green-400'
+                                : 'text-red-400 hover:bg-red-100 hover:text-red-400'
                         ]}
                         disabled={disableActions}
                     >

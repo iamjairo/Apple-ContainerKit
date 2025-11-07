@@ -32,4 +32,6 @@
     onMount(async () => {
         await getImageList();
     });
+
+    $inspect(images)
 </script>

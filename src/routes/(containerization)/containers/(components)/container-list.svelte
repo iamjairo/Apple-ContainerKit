@@ -130,10 +130,6 @@
             />
             <Label for="running-containers-only">Running Containers Only</Label>
         </div>
-<!--        <Button size="sm" variant="outline" onclick={getAllContainers}>-->
-<!--            <Refresh />-->
-<!--            <span>Refresh</span>-->
-<!--        </Button>-->
     </div>
 
     <div class="flex flex-col space-y-2">
