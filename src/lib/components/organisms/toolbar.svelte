@@ -23,7 +23,7 @@
     let sessions = $state<TerminalSession[]>([]);
     let activeSessionId = $state<string | null>(null);
     let editingValue = $state('');
-    let version = $state('0.0.0');
+    let version = $state('0.6.0');
     let appName = $state('Container Kit');
     let DEFAULT_BOTTOM_TOOLBAR_POSITION = 8;
     // Dragging and positioning state
