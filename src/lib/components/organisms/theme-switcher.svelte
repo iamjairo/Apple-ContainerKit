@@ -5,18 +5,12 @@
     import PlusIcon from '@lucide/svelte/icons/plus';
     import PaintBucket from '@lucide/svelte/icons/paint-bucket';
     import SwatchBook from '@lucide/svelte/icons/swatch-book';
+    import { type Theme, themes } from '$lib/helpers/themes-data.js';
+    import { setTheme, theme } from 'mode-watcher';
 
-    type Theme = { name: string; class: string; title: string };
+    const currentTheme = $state(themes.find((c) => c.name === (theme.current || '')))
 
-    type Props = {
-        themes: Theme[];
-        setTheme: (theme: string) => void;
-        currentTheme: Theme | undefined;
-    };
-
-    let { themes, setTheme, currentTheme }: Props = $props();
-
-    let activeTheme = $state(currentTheme || themes[0]);
+    let activeTheme = $state<Theme>(currentTheme || themes[0]);
 </script>
 
 <Sidebar.Menu>
