@@ -8,6 +8,8 @@
 
     import { spawn } from 'tauri-pty';
     import { onDestroy } from 'svelte';
+    import { Command } from '@tauri-apps/plugin-shell';
+    import { commands } from '$lib/models/bindings.js';
 
     let terminal: Terminal | undefined = $state(undefined);
     let ptyProcess: ReturnType<typeof spawn>;
@@ -36,6 +38,11 @@
         allowProposedApi: true
     };
 
+    async function getShell() {
+        const command = Command.create('echo', ['$SHELL']);
+        return await command.execute();
+    }
+
     async function onLoad() {
         try {
             if (!terminal) return;
@@ -60,8 +67,10 @@
             // Fit terminal to container
             setTimeout(() => fitAddon.fit(), 10);
 
+            const shell = await commands.getDefaultShell();
+
             // Create PTY process
-            ptyProcess = spawn('zsh', [], {
+            ptyProcess = spawn(shell, [], {
                 cols: terminal.cols,
                 rows: terminal.rows
             });

@@ -3,6 +3,7 @@ use specta_typescript::Typescript;
 use tauri_specta::{Builder, collect_commands};
 
 use crate::commands::registry::run_container_command_with_stdin;
+use crate::commands::shell::get_default_shell;
 use crate::commands::system::execute_with_elevated_command;
 
 // mods
@@ -24,7 +25,8 @@ pub async fn run() {
     let spectabuilder = Builder::<tauri::Wry>::new().commands(collect_commands![
         greet,
         run_container_command_with_stdin,
-        execute_with_elevated_command
+        execute_with_elevated_command,
+        get_default_shell
     ]);
 
     #[cfg(debug_assertions)] // <- Only export on non-release builds

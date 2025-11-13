@@ -23,6 +23,9 @@ async executeWithElevatedCommand(command: string, args: string[]) : Promise<Resu
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+async getDefaultShell() : Promise<string> {
+    return await TAURI_INVOKE("get_default_shell");
 }
 }
 
