@@ -7,14 +7,14 @@
     import { createContainerDrawerData } from './images.svelte';
 
     type Props = {
-        name: string,
-    }
+        name: string;
+    };
 
-    const {name}: Props = $props();
+    const { name }: Props = $props();
 
     function showCreateContainerDrawer() {
         createContainerDrawerData.open = true;
-        createContainerDrawerData.selected = name
+        createContainerDrawerData.selected = name;
     }
 
     function deleteImage() {}
@@ -32,13 +32,11 @@
                         onclick={showCreateContainerDrawer}
                         class=""
                     >
-                        <Box class="text-primary"/>
+                        <Box class="text-primary" />
                     </Button>
                 {/snippet}
             </Tooltip.Trigger>
-            <Tooltip.Content side="left">
-                Create Container
-            </Tooltip.Content>
+            <Tooltip.Content side="left">Create Container</Tooltip.Content>
         </Tooltip.Root>
     </Tooltip.Provider>
     <Separator orientation="vertical" class="h-5 bg-emerald-600" />

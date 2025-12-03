@@ -18,9 +18,9 @@
     import { Button } from '$lib/components/ui/button';
     import Refresh from '@lucide/svelte/icons/rotate-ccw';
     import Search from '@lucide/svelte/icons/search';
-    import Import from "@lucide/svelte/icons/import"
-    import CloudDownload from "@lucide/svelte/icons/cloud-download"
-    import Delete from "@lucide/svelte/icons/trash-2"
+    import Import from '@lucide/svelte/icons/import';
+    import CloudDownload from '@lucide/svelte/icons/cloud-download';
+    import Delete from '@lucide/svelte/icons/trash-2';
     import { Badge } from '$lib/components/ui/badge/index.js';
 
     type DataTableProps<TData, TValue> = {
@@ -30,10 +30,7 @@
 
     type Props = {} & DataTableProps<TData, TValue>;
 
-    let {
-        data,
-        columns,
-    } : Props = $props();
+    let { data, columns }: Props = $props();
 
     let searchInputBox: HTMLInputElement | null = $state(null);
     let showKeyboardShortcut = $state(true);
@@ -115,13 +112,13 @@
                     bind:value={searchValue}
                     oninput={() => table.getColumn('name')?.setFilterValue(searchValue)}
                     onkeydown={(e) => {
-                     if (e.key === 'Escape') {
-                         return searchInputBox?.blur()
-                     }
-                    if (e.key === 'Enter') {
-                        table.getColumn('name')?.setFilterValue(searchValue);
-                    }
-                }}
+                        if (e.key === 'Escape') {
+                            return searchInputBox?.blur();
+                        }
+                        if (e.key === 'Enter') {
+                            table.getColumn('name')?.setFilterValue(searchValue);
+                        }
+                    }}
                     onfocus={() => (showKeyboardShortcut = false)}
                     onblur={() => (showKeyboardShortcut = searchValue?.length === 0)}
                     class="pl-8 text-pretty"
@@ -146,11 +143,14 @@
                 <Button class="relative" variant="destructive">
                     <Delete />
                     Delete
-                    <Badge variant="destructive" class="absolute rounded-full -top-3 -right-2 bg-destructive-foreground! text-destructive!">
+                    <Badge
+                        variant="destructive"
+                        class="absolute rounded-full -top-3 -right-2 bg-destructive-foreground! text-destructive!"
+                    >
                         {@const totalSelectedRows = Object.keys(rowSelection).length}
                         {#if totalSelectedRows !== data.length}
                             {totalSelectedRows}
-                        {:else }
+                        {:else}
                             All
                         {/if}
                     </Badge>
@@ -158,7 +158,6 @@
             </div>
         {/if}
     </div>
-
 
     <div class="flex flex-col space-y-2">
         <div class="rounded-md border">

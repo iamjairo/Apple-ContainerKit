@@ -22,11 +22,11 @@
         class: className
     }: TerminalFooterProps = $props();
 
-    let version = $state('0.6.0')
+    let version = $state('0.6.0');
 
     onMount(async () => {
-        version = await getVersion()
-    })
+        version = await getVersion();
+    });
 </script>
 
 <div

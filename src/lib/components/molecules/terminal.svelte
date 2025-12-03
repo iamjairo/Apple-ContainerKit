@@ -8,8 +8,7 @@
 
     import { spawn } from 'tauri-pty';
     import { onDestroy } from 'svelte';
-    import { Command } from '@tauri-apps/plugin-shell';
-    import { commands } from '$lib/models/bindings.js';
+    import { getDefaultShell } from '$lib/helpers/default-shell.js';
 
     let terminal: Terminal | undefined = $state(undefined);
     let ptyProcess: ReturnType<typeof spawn>;
@@ -18,8 +17,10 @@
         class?: string;
         sessionId?: string;
         onPtyCreated?: (ptyProcess: any) => void;
-        container?: string
+        container?: string;
     };
+
+    let { class: className, sessionId, container, onPtyCreated }: TerminalProps = $props();
 
     let options: ITerminalOptions & ITerminalInitOnlyOptions = {
         fontFamily:
@@ -37,11 +38,6 @@
         screenReaderMode: false,
         allowProposedApi: true
     };
-
-    async function getShell() {
-        const command = Command.create('echo', ['$SHELL']);
-        return await command.execute();
-    }
 
     async function onLoad() {
         try {
@@ -67,7 +63,9 @@
             // Fit terminal to container
             setTimeout(() => fitAddon.fit(), 10);
 
-            const shell = await commands.getDefaultShell();
+            const shell = await getDefaultShell();
+
+            console.log(shell);
 
             // Create PTY process
             ptyProcess = spawn(shell, [], {
@@ -108,7 +106,8 @@
 
             // Access running container shell
             if (container) {
-                ptyProcess.write(`container exec -it ${container} sh \r`)
+                ptyProcess.write(`container exec -it ${container} sh \r`);
+                ptyProcess.write(`clear \r`);
             }
 
             setTimeout(() => terminal?.focus(), 100);
@@ -121,8 +120,6 @@
             }
         }
     }
-
-    let { class: className, sessionId, container, onPtyCreated }: TerminalProps = $props();
 
     // Cleanup PTY process when component is destroyed
     onDestroy(() => {
@@ -138,8 +135,8 @@
 </script>
 
 <!-- fix: scroll bottom margin so content doesn't hide behind the terminal container suggestion -->
-<div class={['terminal-container', className]}>
-    <Xterm class="w-full h-full !scroll-mb-10 pb-2" bind:terminal {options} {onLoad} />
+<div class={['terminal-container border-amber-300', className]}>
+    <Xterm class="w-full h-full !scroll-mb-10 pb-2 {container && 'container-page'}" bind:terminal {options} {onLoad} />
 </div>
 
 <style lang="css">
@@ -149,5 +146,9 @@
 
     :global(.terminal-container .xterm-viewport) {
         overflow-y: auto;
+    }
+
+    :global(.terminal-container .container-page .xterm-viewport) {
+        border-radius: 10px;
     }
 </style>

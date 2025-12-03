@@ -56,11 +56,11 @@ export type ContainerDNS = {
 };
 
 export type NetworkAttachment = {
-     network: string
+    network: string;
     /// The hostname associated with the attachment.
-    hostname: string
+    hostname: string;
     /// The subnet CIDR, where the address is the container interface IPv4 address.
-    address: string
+    address: string;
     /// The IPv4 gateway address.
-    gateway: string
-}
+    gateway: string;
+};

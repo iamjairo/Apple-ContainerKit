@@ -7,7 +7,8 @@
 
     const { data } = $props();
     let showDeleteDialog: boolean = $state(false);
-    let deleteDialogProps: Omit<ComponentProps<typeof DeleteConfirmationDialog>, 'open'> | null = $state(null)
+    let deleteDialogProps: Omit<ComponentProps<typeof DeleteConfirmationDialog>, 'open'> | null =
+        $state(null);
     function removeRegistry() {
         showDeleteDialog = false;
         deleteDialogProps = null;
@@ -19,23 +20,22 @@
             description: `The ${registry.name} registry is selected for deletion. Any additional data associated with this registry are also deleted.`,
             deleteAction: removeRegistry,
             onClose() {
-                deleteDialogProps = null
-            },
+                deleteDialogProps = null;
+            }
         };
         showDeleteDialog = true;
     }
 </script>
-<div class="flex flex-col w-full h-full">
-    <div class="flex flex-col items-center justify-normal">
 
-    </div>
+<div class="flex flex-col w-full h-full">
+    <div class="flex flex-col items-center justify-normal"></div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {#each data.registries as registry (registry.id)}
             {@const props = {
                 ...registry,
-                isDefault: data.defaultRegistry === registry.url,
+                isDefault: data.defaultRegistry === registry.url
             }}
-            <RegistryCard {...props} handleDeleteRegistry={() => handleDeleteRegistry(registry)}/>
+            <RegistryCard {...props} handleDeleteRegistry={() => handleDeleteRegistry(registry)} />
         {/each}
     </div>
 </div>

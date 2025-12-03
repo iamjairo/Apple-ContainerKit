@@ -1,4 +1,7 @@
-import { createContainerCommand, validateCommandOutput } from '$lib/services/containerization/utils';
+import {
+    createContainerCommand,
+    validateCommandOutput
+} from '$lib/services/containerization/utils';
 import { commands } from '$lib/models/bindings';
 import type { RegistryLoginParams, RegistryLogoutParams } from '$lib/models/container';
 
@@ -31,4 +34,4 @@ export const registryLogout = async (options: RegistryLogoutParams) => {
     const command = createContainerCommand(['registry', 'logout', options.registry]);
     const output = await command.execute();
     return validateCommandOutput(output);
-}
+};

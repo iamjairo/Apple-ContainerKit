@@ -11,7 +11,7 @@
 
     let error: ErrorLog | null = $state(null);
     let images: ContainerImage[] = $state([]);
-    let imageDirChangesWatcher: UnwatchFn | null = $state(null)
+    let imageDirChangesWatcher: UnwatchFn | null = $state(null);
 
     async function getImageList() {
         const output = await getAllImages();
@@ -36,23 +36,20 @@
 
     onMount(async () => {
         await getImageList();
-        imageDirChangesWatcher = await watchImageChanges(getImageList, 500)
+        imageDirChangesWatcher = await watchImageChanges(getImageList, 500);
     });
 
     onDestroy(() => {
         if (imageDirChangesWatcher) imageDirChangesWatcher();
-    })
+    });
 
-    $inspect(images)
+    $inspect(images);
 </script>
 
 <div class="flex flex-1 flex-col">
     <div class="@container/main flex flex-1 flex-col gap-2">
         <div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-            <ImageList
-                data={images}
-                columns={columns()}
-            />
+            <ImageList data={images} columns={columns()} />
         </div>
     </div>
 </div>

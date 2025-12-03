@@ -8,7 +8,7 @@
     import { type Theme, themes } from '$lib/helpers/themes-data.js';
     import { setTheme, theme } from 'mode-watcher';
 
-    const currentTheme = $state(themes.find((c) => c.name === (theme.current || '')))
+    const currentTheme = $state(themes.find((c) => c.name === (theme.current || '')));
 
     let activeTheme = $state<Theme>(currentTheme || themes[0]);
 </script>

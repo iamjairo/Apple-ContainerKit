@@ -36,4 +36,4 @@ export const themes = [
         title: 'Starry Night',
         name: 'starry-night'
     }
-]
+];

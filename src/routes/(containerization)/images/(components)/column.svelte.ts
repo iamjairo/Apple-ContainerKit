@@ -2,7 +2,7 @@ import type { ColumnDef } from '@tanstack/table-core';
 import type { ContainerImage } from '$lib/models/container';
 import { renderComponent, renderSnippet } from '$lib/components/ui/data-table';
 import DataTableCheckbox from '$lib/components/atoms/data-table-checkbox.svelte';
-import ImageListActions from "./image-list-actions.svelte"
+import ImageListActions from './image-list-actions.svelte';
 import prettyBytes from 'pretty-bytes';
 
 export function columns(): ColumnDef<ContainerImage>[] {

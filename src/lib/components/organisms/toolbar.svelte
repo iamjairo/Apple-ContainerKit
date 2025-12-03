@@ -51,7 +51,6 @@
                 toolbarBottom = Math.min(position, window.innerHeight - 100);
             }
         }
-        console.log(savedPosition, toolbarBottom);
     });
 
     onDestroy(() => {
@@ -122,7 +121,7 @@
         if (session?.ptyProcess) {
             try {
                 session.ptyProcess.kill();
-                console.log(`Closed PTY process for session: ${sessionId}`);
+                console.info(`Closed PTY process for session: ${sessionId}`);
             } catch (error) {
                 console.warn(`Failed to close PTY process for session ${sessionId}:`, error);
             }
@@ -319,11 +318,7 @@
                     <div class="w-1 h-1 bg-muted-foreground rounded-full"></div>
                 </div>
             </div>
-            <TerminalHeader
-                onClose={handleClose}
-                onMinimize={handleMinimize}
-                onNewTab={createNewSession}
-            />
+            <TerminalHeader onClose={handleClose} onMinimize={handleMinimize} {minimized} />
         </div>
 
         <!-- Terminal Tabs -->

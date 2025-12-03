@@ -6,7 +6,12 @@ import type { Output } from '$lib/services/containerization/models';
 import { commands } from '$lib/models/bindings';
 
 export async function createDns(domain: string): Promise<Output> {
-    const output = await commands.executeWithElevatedCommand('container', ['s', 'dns', 'create', domain]);
+    const output = await commands.executeWithElevatedCommand('container', [
+        's',
+        'dns',
+        'create',
+        domain
+    ]);
     if (output.status === 'ok') {
         return validateCommandOutput(output.data);
     }

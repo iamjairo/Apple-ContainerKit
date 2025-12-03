@@ -1,14 +1,40 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import { addRegistriesSeedV1 } from '$lib/db/seeds/registery';
     import Loader from '@lucide/svelte/icons/loader';
     import { isLoading } from './loading.svelte';
+    import { startContainerization } from '$lib/services/containerization/system/service';
+    import { toast } from 'svelte-sonner';
+    import { isContainerizationActive } from '$lib/stores/containerization.svelte';
+    import { isSupportedVersion } from '$lib/stores/mac-os.svelte';
+    import { hasContainerCli } from '$lib/services/containerization/setup';
+    import { createTray, destroyTray } from '$lib/services/tray/create';
+    import { routes } from '$lib/helpers/routes';
 
     onMount(async () => {
+        isLoading.setTrue();
+        if (!isSupportedVersion()) return goto(routes.Unsupported);
+        if (!(await hasContainerCli())) return goto(routes.Setup);
+        const containerizationOutput = await startContainerization();
+
+        if (containerizationOutput.error || containerizationOutput.stderr) {
+            toast.error('Not able to start containerization process', {
+                description: containerizationOutput.stderr
+            });
+            isContainerizationActive.setFalse();
+            return goto(routes.ContainerizationStatus);
+        }
+
+        isContainerizationActive.setTrue();
+        await createTray();
         await Promise.all([addRegistriesSeedV1()]);
-        await goto('/containers');
+        await goto(routes.Containers);
         isLoading.setFalse();
+    });
+
+    onDestroy(async () => {
+        await destroyTray();
     });
 </script>
 

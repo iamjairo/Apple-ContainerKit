@@ -1,10 +1,10 @@
 <script>
-    import ExternalLink from '@lucide/svelte/icons/external-link';
     import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
     import { Button } from '../ui/button/index.js';
     import * as Card from '../ui/card';
     import { goto } from '$app/navigation';
     import { isSupportedVersion } from '$lib/stores/mac-os.svelte.js';
+    import { routes } from '$lib/helpers/routes.js';
 </script>
 
 <div class="flex items-center justify-center min-h-screen p-4">
@@ -29,16 +29,8 @@
                 </p>
             </div>
             <div class="flex flex-col gap-2">
-                <!--                <Button-->
-                <!--                    href="https://support.apple.com/macos/upgrade"-->
-                <!--                    target="_blank"-->
-                <!--                    rel="noopener noreferrer"-->
-                <!--                >-->
-                <!--                    Check System Requirements-->
-                <!--                    <ExternalLink class="ml-2 h-4 w-4" />-->
-                <!--                </Button>-->
                 {#if isSupportedVersion()}
-                    <Button variant="outline" onclick={() => goto('/containers')}>
+                    <Button variant="outline" onclick={() => goto(routes.Containers)}>
                         Containers
                     </Button>
                 {/if}

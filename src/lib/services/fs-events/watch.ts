@@ -9,7 +9,7 @@ async function createManagedWatcher(
     callback: (event: WatchEvent) => void | Promise<void>,
     delayMs: number,
     recursive: boolean = false,
-    baseDirectory?: BaseDirectory,
+    baseDirectory?: BaseDirectory
 ): Promise<UnwatchFn> {
     try {
         const unwatchFn = watch(

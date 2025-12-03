@@ -1,6 +1,7 @@
 <script lang="ts">
     import ContainerizationStatus from '$lib/components/pages/containerization-status.svelte';
     import { onMount, onDestroy } from 'svelte';
+    import { isLoading } from '../../loading.svelte';
 
     let removePopstateListener: null | (() => void) = null;
 
@@ -19,6 +20,8 @@
 
         window.addEventListener('popstate', handlePopstate);
         removePopstateListener = () => window.removeEventListener('popstate', handlePopstate);
+
+        isLoading.setFalse();
     });
 
     onDestroy(() => {
