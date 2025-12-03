@@ -9,3 +9,13 @@ export async function getAllImages(): Promise<Output> {
     const output = await command.execute();
     return validateCommandOutput(output);
 }
+
+export async function removeImage(imageReference: string): Promise<Output> {
+    return removeMultipleImages([imageReference]);
+}
+
+export async function removeMultipleImages(imagesReference: Array<string>): Promise<Output> {
+    const command = createContainerCommand(['image', 'rm', imagesReference.join(' ')]);
+    const output = await command.execute();
+    return validateCommandOutput(output);
+}

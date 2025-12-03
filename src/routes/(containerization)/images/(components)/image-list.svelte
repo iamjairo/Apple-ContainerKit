@@ -10,6 +10,8 @@
         getPaginationRowModel
     } from '@tanstack/table-core';
     import { createSvelteTable, FlexRender } from '$lib/components/ui/data-table';
+    import DeleteConfirmationDialog from '$lib/components/molecules/delete-confirmation-dialog.svelte';
+    import * as Alert from "$lib/components/ui/alert/index.js";
     import * as Table from '$lib/components/ui/table';
     import { Input } from '$lib/components/ui/input';
     import { Label } from '$lib/components/ui/label';
@@ -21,7 +23,13 @@
     import Import from '@lucide/svelte/icons/import';
     import CloudDownload from '@lucide/svelte/icons/cloud-download';
     import Delete from '@lucide/svelte/icons/trash-2';
+    import AlertCircleIcon from "@lucide/svelte/icons/alert-circle";
     import { Badge } from '$lib/components/ui/badge/index.js';
+    import { getAllContainers } from '$lib/services/containerization/containers';
+    import { tryCatch } from '$lib/helpers/try-catch.js';
+    import { toast } from 'svelte-sonner';
+    import type { ContainerClient, ContainerImage } from '$lib/models/container';
+    import { removeMultipleImages } from '$lib/services/containerization/images';
 
     type DataTableProps<TData, TValue> = {
         columns: ColumnDef<TData, TValue>[];
@@ -34,6 +42,9 @@
 
     let searchInputBox: HTMLInputElement | null = $state(null);
     let showKeyboardShortcut = $state(true);
+    let showMultipleDeleteDialog = $state(false);
+    let imagesInUse: Record<string, string[]> = $state({});
+    let imagesToDelete: string[] = $state([]);
 
     const keys = new PressedKeys();
     keys.onKeys(['meta', 'k'], () => {
@@ -91,6 +102,77 @@
     });
 
     let searchValue = $state((table.getColumn('name')?.getFilterValue() as string) ?? '');
+
+    async function deleteSelectedImages() {
+        if (imagesToDelete.length === 0) {
+            toast.warning('No images to delete', {
+                description: 'All selected images are currently in use by containers.'
+            });
+            closeDeleteDialog();
+            return;
+        }
+
+        const {data, error} = await tryCatch(removeMultipleImages(imagesToDelete))
+        closeDeleteDialog();
+        if (error) {
+            toast.error(error.message);
+            return;
+        }
+
+        if (data.error) {
+            toast.error(data.stderr)
+            return;
+        }
+
+        if (data && data.stdout) {
+            toast.success('Selected images deleted successfully', {description: data.stdout});
+            table.resetRowSelection();
+        }
+    }
+
+    async function startMultipleImagesDelete() {
+        const { data: output, error } = await tryCatch(getAllContainers());
+        if (error) {
+            console.error('Error fetching containers:', error);
+            toast.error(error.message);
+            return;
+        }
+
+        if (output.error || output.stderr) {
+            toast.error('Error in getting container list', {
+                description: output.stderr
+            });
+            return;
+        }
+
+        if (!output.stdout) {
+            toast.error('Error in getting container list');
+            return;
+        }
+
+        const containers: ContainerClient[] = JSON.parse(output.stdout) ?? [] satisfies ContainerClient[];
+        const selectedRowIds = Object.keys(rowSelection);
+        const selectedRowsData = selectedRowIds.map((rowId) => table.getRow(rowId).original) as Array<ContainerImage>;
+        const imagesInUseMap: Record<string, string[]> = {};
+        for (const image of selectedRowsData) {
+            const containersUsingImage = containers.filter((container) => image.reference === container.configuration.image.reference);
+            if (containersUsingImage.length > 0) {
+                const containerIds = containersUsingImage.map((container) => container.configuration.id);
+                imagesInUseMap[image.reference] = containerIds;
+            } else {
+                imagesToDelete.push(image.reference)
+            }
+        }
+
+        imagesInUse = imagesInUseMap;
+        showMultipleDeleteDialog = true;
+    }
+
+    function closeDeleteDialog() {
+        imagesInUse = {};
+        imagesToDelete = [];
+        showMultipleDeleteDialog = false;
+    }
 </script>
 
 <div class="space-y-4">
@@ -138,9 +220,9 @@
                 </Button>
             </div>
         </div>
-        {#if Object.keys(rowSelection).length > 0}
+        {#if Object.keys(rowSelection).length > 0 }
             <div class="flex items-center space-x-2">
-                <Button class="relative" variant="destructive">
+                <Button class="relative" variant="destructive" onclick={startMultipleImagesDelete}>
                     <Delete />
                     Delete
                     <Badge
@@ -231,3 +313,27 @@
         </div>
     </div>
 </div>
+
+<DeleteConfirmationDialog
+    bind:open={showMultipleDeleteDialog}
+    title="Delete Images"
+    description="Are you sure you want to delete the selected images? This action cannot be undone."
+    deleteAction={deleteSelectedImages}
+    onClose={closeDeleteDialog}
+>
+    {#if Object.keys(imagesInUse).length > 0}
+        <Alert.Root variant="destructive" class="mb-4">
+            <AlertCircleIcon />
+            <Alert.Title>Some images are currently in use.</Alert.Title>
+            <Alert.Description>
+                The following images are being used by running containers and cannot be deleted:
+                <ul class="list-inside list-disc mt-2">
+                    {#each Object.keys(imagesInUse) as reference (reference)}
+                        <li>Container -> {imagesInUse[reference].join(', ')} uses image -> {reference.split('/').at(-1)}</li>
+                    {/each}
+                </ul>
+                <p class="font-semibold tracking-wider">Cannot delete image(s): Container dependencies exist. Delete the containers first.</p>
+            </Alert.Description>
+        </Alert.Root>
+    {/if}
+</DeleteConfirmationDialog>
