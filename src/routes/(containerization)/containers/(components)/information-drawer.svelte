@@ -7,6 +7,7 @@
     import { tabs, type Tabs as TabsType } from './container-details/utils';
     import type { Component } from 'svelte';
     import { ScrollArea } from '$lib/components/ui/scroll-area';
+    import Terminal from "$lib/components/molecules/terminal.svelte"
 
     type Props = {
         open: boolean;
@@ -19,7 +20,8 @@
 
     const componentMap: Record<TabsType[number]['label'], Component<any>> = {
         logs: Logs,
-        inspect: Inspect
+        inspect: Inspect,
+        terminal: Terminal
     };
 </script>
 
@@ -40,10 +42,16 @@
             </Tabs.List>
             {#if open}
                 <Tabs.Content value={activeTab} class="w-full h-[120vh] p-2">
-                    {@const ActiveTabComponent = componentMap[activeTab]}
-                    <ScrollArea class="w-full rounded-3xl h-5/6 pr-3" orientation="vertical">
-                        <ActiveTabComponent {id} />
-                    </ScrollArea>
+                    {#if activeTab === 'terminal'}
+                        <div class="w-full h-[86%]">
+                            <Terminal class="h-full w-full" container={id}/>
+                        </div>
+                    {:else }
+                        {@const ActiveTabComponent = componentMap[activeTab]}
+                        <ScrollArea class="w-full rounded-3xl h-5/6 pr-3" orientation="vertical">
+                            <ActiveTabComponent {id} class="h-full w-full" />
+                        </ScrollArea>
+                    {/if}
                 </Tabs.Content>
             {/if}
         </Tabs.Root>

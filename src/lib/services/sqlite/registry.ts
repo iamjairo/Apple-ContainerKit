@@ -4,4 +4,4 @@ import type { InsertRegistry } from '$lib/models/container';
 
 export async function addRegistry(registryData: InsertRegistry) {
     return db.insert(registry).values(registryData);
-};
+}

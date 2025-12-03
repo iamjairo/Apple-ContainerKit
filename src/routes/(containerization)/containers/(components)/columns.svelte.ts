@@ -69,7 +69,10 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
         {
             id: 'network',
             header: 'Network',
-            accessorFn: (row) => row.networks?.length > 0 ? row.networks?.map((network ) => network.address?.split('/')?.[0]).join(', ') : 'N/A'
+            accessorFn: (row) =>
+                row.networks?.length > 0
+                    ? row.networks?.map((network) => network.address?.split('/')?.[0]).join(', ')
+                    : 'N/A'
         },
         {
             id: 'actions',

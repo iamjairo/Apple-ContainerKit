@@ -7,6 +7,7 @@ A Node.js script that generates a Rust migration file from Drizzle SQL migration
 This script reads SQL migration files created by `drizzle-kit generate` and creates a Rust file that can be used with `tauri-plugin-sql` for database migrations in your Tauri application.
 
 ## Files
+
 - `generate-migrations.ts` - TypeScript version (recommended)
 
 ## How it Works

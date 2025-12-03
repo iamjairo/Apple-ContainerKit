@@ -10,6 +10,6 @@ export type RegistryLoginParams = {
 
 export type RegistryLogoutParams = {
     registry: string;
-}
+};
 
 export type InsertRegistry = InferInsertModel<typeof registry>;

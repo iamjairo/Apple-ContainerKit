@@ -6,11 +6,11 @@ set -e
 # --- Configuration ---
 # Set the version of the Apple Container CLI you want to download.
 # You will need to update this variable for new releases.
-VERSION="0.6.0"
+VERSION="0.7.0"
 
 # Set the URL and filename for the signed installer package (If ever changes).
-PKG_URL="https://github.com/apple/container/releases/download/${VERSION}/container-${VERSION}-installer-signed.pkg"
-PKG_FILE="container-${VERSION}-installer-signed.pkg"
+PKG_URL="https://github.com/apple/container/releases/download/${VERSION}/container-installer-signed.pkg"
+PKG_FILE="container-installer-signed.pkg"
 PKG_FILE_EXPAND_DIR="container-${VERSION}-expanded"
 
 # --- Directory Setup ---

@@ -12,5 +12,9 @@ export const tabs: Tabs = [
     {
         label: 'Inspect',
         value: 'inspect'
+    },
+    {
+        label: 'Terminal',
+        value: 'terminal'
     }
 ];

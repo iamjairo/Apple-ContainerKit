@@ -64,7 +64,7 @@
                 {onKeydown}
             />
         {/each}
-        <TooltipWrapper content="New Terminal" delayDuration={300}>
+        <TooltipWrapper content="New Terminal" delayDuration={100}>
             {#snippet children()}
                 <Button
                     variant="ghost"

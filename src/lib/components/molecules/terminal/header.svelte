@@ -9,8 +9,8 @@
         onClose?: () => void;
         onMinimize?: () => void;
         onMaximize?: () => void;
-        onNewTab?: () => void;
         class?: string;
+        minimized?: boolean;
     }
 
     let {
@@ -18,16 +18,21 @@
         onClose,
         onMinimize,
         onMaximize,
-        onNewTab,
+        minimized,
         class: className
     }: TerminalHeaderProps = $props();
 </script>
 
-<div class={cn('flex items-center justify-between bg-muted px-4 py-2 border-b border-border', className)}>
+<div
+    class={cn(
+        'flex items-center justify-between bg-muted px-4 py-2 border-b border-border',
+        className
+    )}
+>
     <div class="flex items-center gap-3">
-        <TrafficLights {onClose} {onMinimize} onMaximize={onMaximize} />
+        <TrafficLights {onClose} {onMinimize} {onMaximize} />
         <HeaderIcon {title} />
     </div>
 
-    <TabControls {onNewTab} onMinimize={onMinimize} onClose={onClose} />
+    <TabControls {onMinimize} {onClose} {minimized} />
 </div>

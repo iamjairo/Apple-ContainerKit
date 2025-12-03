@@ -2,7 +2,7 @@
     "$schema": "https://schema.tauri.app/config/2",
     "productName": "Container Kit",
     "mainBinaryName": "Container Kit",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "identifier": "com.ethercorps.container-kit",
     "build": {
         "beforeDevCommand": "pnpm dev",
@@ -52,7 +52,7 @@
         "externalBin": [
             "binaries/sidecar/apple-container/bin/container"
         ],
-        "resources": ["migrations/*", "icons/icon.iconset/*", "binaries/sidecar/apple-container/**/*"],
+        "resources": ["migrations/*", "icons/container-kit.icon", "icons/icon.iconset/*", "binaries/sidecar/apple-container/**/*"],
         "createUpdaterArtifacts": true,
         "active": true,
         "targets": ["dmg", "app"],

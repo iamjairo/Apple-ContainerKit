@@ -100,7 +100,6 @@ Add to your Zed `.zed/settings.json`: [Zed project settings](./.zed/settings.jso
     ```
 
 2. **Make Changes**
-
     - Follow our [Code Standards](#code-standards)
     - Write tests for new functionality
     - Update documentation as needed

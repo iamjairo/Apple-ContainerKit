@@ -75,11 +75,10 @@
         const target = event.target as HTMLInputElement;
         onEditValueChange?.(target.value);
     }
-
-
 </script>
 
-<div transition:slide={{axis: 'x'}}
+<div
+    transition:slide={{ axis: 'x' }}
     class={cn(
         'group flex items-center gap-2 px-3 py-2 text-sm border-r border-border transition-colors whitespace-nowrap cursor-pointer min-h-[40px]',
         active
@@ -94,7 +93,13 @@
     aria-selected={active}
 >
     {#if editing}
-        <div class="flex items-center gap-1 py-1" role="button" tabindex="0" onkeydown={() => {}} onclick={(e) => e.stopPropagation()}>
+        <div
+            class="flex items-center gap-1 py-1"
+            role="button"
+            tabindex="0"
+            onkeydown={() => {}}
+            onclick={(e) => e.stopPropagation()}
+        >
             <Input
                 value={editingValue}
                 class="h-6 px-2 py-0 text-xs w-24 focus:w-32 transition-all"

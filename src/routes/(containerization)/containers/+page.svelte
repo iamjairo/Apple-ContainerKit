@@ -11,7 +11,7 @@
     let allContainers: Array<ContainerClient> = $state([]);
     let runningContainers: Array<ContainerClient> = $state([]);
     let showOnlyRunningContainers = $state(false);
-    let containerChangeWatcher: UnwatchFn | null = $state(null)
+    let containerChangeWatcher: UnwatchFn | null = $state(null);
 
     async function getAllContainerList() {
         const output = await getAllContainers();
@@ -19,7 +19,7 @@
         if (output.error || output.stderr) {
             toast.error('Error in getting container list', {
                 description: output.stderr
-            })
+            });
             return;
         }
 
@@ -58,14 +58,14 @@
 
     onMount(async () => {
         await getAllContainerList();
-        containerChangeWatcher = await watchContainerChanges(getAllContainerList, 500)
+        containerChangeWatcher = await watchContainerChanges(getAllContainerList, 500);
     });
 
     onDestroy(() => {
         if (containerChangeWatcher) {
-            containerChangeWatcher()
+            containerChangeWatcher();
         }
-    })
+    });
 </script>
 
 <div class="flex flex-1 flex-col">
@@ -79,5 +79,3 @@
         </div>
     </div>
 </div>
-
-<!--<Terminal />-->

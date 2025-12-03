@@ -35,17 +35,14 @@ export async function watchDnsResolverChanges(
     callback: (event: WatchEvent) => void | Promise<void>,
     delayMs: number = 1000
 ): Promise<UnwatchFn> {
-    return watchDnsResolverDir(
-        async (event: WatchEvent) => {
-            console.log('DNS changes callback:', event);
-            if (isDataModifyEvent(event) || isCreateEvent(event) || isRemoveEvent(event)) {
-                try {
-                    await callback(event);
-                } catch (error) {
-                    console.error('Error in DNS resolver callback:', error);
-                }
+    return watchDnsResolverDir(async (event: WatchEvent) => {
+        console.log('DNS changes callback:', event);
+        if (isDataModifyEvent(event) || isCreateEvent(event) || isRemoveEvent(event)) {
+            try {
+                await callback(event);
+            } catch (error) {
+                console.error('Error in DNS resolver callback:', error);
             }
-        },
-        delayMs
-    );
+        }
+    }, delayMs);
 }
