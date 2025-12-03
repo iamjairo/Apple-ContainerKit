@@ -67,25 +67,19 @@ Container Kit is a comprehensive desktop application designed specifically for A
 
 _Beautiful overview of your container ecosystem_
 
-![Dashboard](docs/images/dashboard-preview.png)
+![Dashboard](static/preview/containers.png)
 
-### Container Management
+### Terminal Integration
+_Integrated terminal for advanced container commands_
 
-_Intuitive container lifecycle management_
-
-![Container Management](docs/images/containers-preview.png)
-
-### Development Scripts
-
-_Powerful TypeScript automation and build scripts_
-
-![Development Scripts](docs/images/scripts-preview.png)
+![Terminal Integration](static/preview/terminal.png)
 
 ### Settings & Configuration
 
-_Comprehensive configuration options_
+[//]: # (_Comprehensive configuration options_)
 
-![Settings](docs/images/settings-preview.png)
+[//]: # ()
+[//]: # (![Settings]&#40;docs/images/settings-preview.png&#41;)
 
 ## 🚀 Installation
 
