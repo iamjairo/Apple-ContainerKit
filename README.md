@@ -67,7 +67,7 @@ Container Kit is a comprehensive desktop application designed specifically for A
 
 _Beautiful overview of your container ecosystem_
 
-![Dashboard](docs/images/dashboard-preview.png)
+![Dashboard](static/preview/containers.png)
 
 ### Container Management
 
