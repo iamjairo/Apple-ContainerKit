@@ -134,7 +134,6 @@
     });
 </script>
 
-<!-- fix: scroll bottom margin so content doesn't hide behind the terminal container suggestion -->
 <div class={['terminal-container border-amber-300', className]}>
     <Xterm class="w-full h-full !scroll-mb-10 pb-2 {container && 'container-page'}" bind:terminal {options} {onLoad} />
 </div>

@@ -9,6 +9,7 @@
         getFilteredRowModel,
         getPaginationRowModel
     } from '@tanstack/table-core';
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
     import { createSvelteTable, FlexRender } from '$lib/components/ui/data-table';
     import DeleteConfirmationDialog from '$lib/components/molecules/delete-confirmation-dialog.svelte';
     import * as Alert from "$lib/components/ui/alert/index.js";
@@ -30,15 +31,18 @@
     import { toast } from 'svelte-sonner';
     import type { ContainerClient, ContainerImage } from '$lib/models/container';
     import { removeMultipleImages } from '$lib/services/containerization/images';
+    import { ConfirmDeleteDialog } from '$lib/components/ui/confirm-delete-dialog';
 
     type DataTableProps<TData, TValue> = {
         columns: ColumnDef<TData, TValue>[];
         data: TData[];
+        showPullImageDialog?: boolean;
+        showTarImageDialog?: boolean;
     };
 
     type Props = {} & DataTableProps<TData, TValue>;
 
-    let { data, columns }: Props = $props();
+    let { data, columns, showPullImageDialog = $bindable(), showTarImageDialog = $bindable() }: Props = $props();
 
     let searchInputBox: HTMLInputElement | null = $state(null);
     let showKeyboardShortcut = $state(true);
@@ -208,13 +212,13 @@
             </div>
             <div class="flex items-center space-x-2">
                 <!-- TODO: Implement a dialog to fetch a new image -->
-                <Button variant="outline">
+                <Button variant="outline" onclick={() => showTarImageDialog = true}>
                     <Import /> Import Image
                 </Button>
             </div>
             <div class="flex items-center space-x-2">
                 <!-- TODO: Implement a dialog to fetch a new image -->
-                <Button variant="outline">
+                <Button variant="outline" onclick={() => showPullImageDialog = true}>
                     <CloudDownload />
                     Pull Image
                 </Button>
@@ -337,3 +341,5 @@
         </Alert.Root>
     {/if}
 </DeleteConfirmationDialog>
+
+<ConfirmDeleteDialog />

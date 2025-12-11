@@ -26,6 +26,14 @@ async executeWithElevatedCommand(command: string, args: string[]) : Promise<Resu
 },
 async getDefaultShell() : Promise<string> {
     return await TAURI_INVOKE("get_default_shell");
+},
+async streamContainerCommand(args: string[], eventName: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("stream_container_command", { args, eventName }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
 }
 }
 

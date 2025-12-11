@@ -1,4 +1,4 @@
-import { isUnsupported } from '$lib/stores/mac-os.svelte';
+import { isUnsupported } from '$lib/stores/mac-os.svelte.js';
 import { redirect } from '@sveltejs/kit';
 
 export const prerender = true;

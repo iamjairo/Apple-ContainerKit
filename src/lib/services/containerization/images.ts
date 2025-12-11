@@ -10,6 +10,16 @@ export async function getAllImages(): Promise<Output> {
     return validateCommandOutput(output);
 }
 
+export function createPullImageCommand(imageDetails: Array<string>) {
+    return createContainerCommand(['image', 'pull', ...imageDetails]);
+}
+
+export async function pullImage(imageDetails: Array<string>): Promise<Output> {
+    const command = createContainerCommand(['image', 'pull', ...imageDetails]);
+    const output = await command.execute();
+    return validateCommandOutput(output);
+}
+
 export async function removeImage(imageReference: string): Promise<Output> {
     return removeMultipleImages([imageReference]);
 }

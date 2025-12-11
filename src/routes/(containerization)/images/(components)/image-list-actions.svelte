@@ -5,19 +5,59 @@
     import Delete from '@lucide/svelte/icons/trash-2';
     import Box from '@lucide/svelte/icons/box';
     import { createContainerDrawerData } from './images.svelte';
+    import { confirmDelete } from '$lib/components/ui/confirm-delete-dialog';
+    import { removeImage } from '$lib/services/containerization/images';
+    import { tryCatch } from '$lib/helpers/try-catch';
+    import { getAllContainers } from '$lib/services/containerization/containers';
+    import { toast } from 'svelte-sonner';
+    import type { ContainerClient } from '$lib/models/container';
 
     type Props = {
         name: string;
+        reference: string;
     };
 
-    const { name }: Props = $props();
+    const { name, reference }: Props = $props();
 
     function showCreateContainerDrawer() {
         createContainerDrawerData.open = true;
         createContainerDrawerData.selected = name;
     }
 
-    function deleteImage() {}
+    async function deleteImage() {
+        const { data: output, error } = await tryCatch(getAllContainers());
+        let imagesToDelete = []
+        if (error) {
+            console.error('Error fetching containers:', error);
+            toast.error(error.message);
+            return;
+        }
+
+        if (output.error || output.stderr) {
+            toast.error('Error in getting container list', {
+                description: output.stderr
+            });
+            return;
+        }
+
+        if (!output.stdout) {
+            toast.error('Error in getting container list');
+            return;
+        }
+
+        const containers: ContainerClient[] = JSON.parse(output.stdout) ?? [] satisfies ContainerClient[];
+        const containersUsingImage = containers.filter((container) => reference === container.configuration.image.reference);
+        if (containersUsingImage.length > 0) {
+            return toast.error(`You can't delete an image which is being used in containers: ${containersUsingImage.join(', ')}`)
+        }
+        confirmDelete({
+            title: name,
+            description: `Are you sure you want to delete ${name} image?`,
+            onConfirm: async () => {
+                await removeImage(reference);
+            }
+        })
+    }
 </script>
 
 <div class="flex items-center h-full gap-x-0.5">

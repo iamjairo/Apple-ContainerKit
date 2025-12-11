@@ -7,7 +7,7 @@
     import { startContainerization } from '$lib/services/containerization/system/service';
     import { toast } from 'svelte-sonner';
     import { isContainerizationActive } from '$lib/stores/containerization.svelte';
-    import { isSupportedVersion } from '$lib/stores/mac-os.svelte';
+    import { isSupportedVersion } from '$lib/stores/mac-os.svelte.js';
     import { hasContainerCli } from '$lib/services/containerization/setup';
     import { createTray, destroyTray } from '$lib/services/tray/create';
     import { routes } from '$lib/helpers/routes';

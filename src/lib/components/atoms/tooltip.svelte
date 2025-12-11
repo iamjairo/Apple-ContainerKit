@@ -51,7 +51,7 @@
             {side}
             {sideOffset}
             {align}
-            class={contentClass}
+            class={[contentClass]}
             arrowClasses={cn('bg-primary', arrowClass)}
         >
             {content}
