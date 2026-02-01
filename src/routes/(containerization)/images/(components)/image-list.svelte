@@ -220,7 +220,7 @@
                 <!-- TODO: Implement a dialog to fetch a new image -->
                 <Button variant="outline" onclick={() => showPullImageDialog = true}>
                     <CloudDownload />
-                    Pull Image
+                    Pull Remote Image
                 </Button>
             </div>
         </div>

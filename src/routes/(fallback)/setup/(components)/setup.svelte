@@ -8,6 +8,8 @@
     import { toast } from 'svelte-sonner';
     import { routes } from '$lib/helpers/routes';
 
+    let haveContainerCli = $state(false);
+
     async function startSymlink() {
         const containerCliExist = await hasContainerCli();
         if (containerCliExist) {
@@ -19,6 +21,10 @@
         }
         await goto(routes.Containers);
     }
+
+    // $effect(async () => {
+    //     haveContainerCli = await hasContainerCli()
+    // })
 </script>
 
 <div class="flex items-center justify-center min-h-screen p-4">
@@ -29,11 +35,8 @@
             >
                 <TriangleAlert class="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
             </div>
-            <Card.Title>Setup</Card.Title>
-            <Card.Description
-                >Yo have stopped containerization, please <strong>start the service again</strong
-                >.</Card.Description
-            >
+            <Card.Title>Symlink Error</Card.Title>
+            <Card.Description><strong></strong></Card.Description>
         </Card.Header>
         <Card.Content class="space-y-4">
             <div class="flex flex-col gap-2">

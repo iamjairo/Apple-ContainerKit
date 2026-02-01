@@ -4,6 +4,7 @@
     import { Button } from '$lib/components/ui/button/index.js';
     import Delete from '@lucide/svelte/icons/trash-2';
     import Box from '@lucide/svelte/icons/box';
+    import ListIndentIncrease from '@lucide/svelte/icons/list-indent-increase';
     import { createContainerDrawerData } from './images.svelte';
     import { confirmDelete } from '$lib/components/ui/confirm-delete-dialog';
     import { removeImage } from '$lib/services/containerization/images';
@@ -11,6 +12,7 @@
     import { getAllContainers } from '$lib/services/containerization/containers';
     import { toast } from 'svelte-sonner';
     import type { ContainerClient } from '$lib/models/container';
+    import ImageListMoreActions from './image-list-more-actions.svelte';
 
     type Props = {
         name: string;
@@ -96,11 +98,23 @@
                 {/snippet}
             </Tooltip.Trigger>
             <Tooltip.Content
-                side="right"
+                side="top"
                 class="bg-destructive text-destructive-foreground"
                 arrowClasses="bg-destructive"
             >
                 <p>Delete Image</p>
+            </Tooltip.Content>
+        </Tooltip.Root>
+    </Tooltip.Provider>
+    <Tooltip.Provider delayDuration={10}>
+        <Tooltip.Root>
+            <Tooltip.Trigger>
+                {#snippet child({ props })}
+                    <ImageListMoreActions buttonProps={props}/>
+                {/snippet}
+            </Tooltip.Trigger>
+            <Tooltip.Content side="right">
+                <p>More options</p>
             </Tooltip.Content>
         </Tooltip.Root>
     </Tooltip.Provider>

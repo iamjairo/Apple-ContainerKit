@@ -29,3 +29,9 @@ export async function removeMultipleImages(imagesReference: Array<string>): Prom
     const output = await command.execute();
     return validateCommandOutput(output);
 }
+
+export async function importImageFromTar(path: string): Promise<Output> {
+    const command = createContainerCommand(['image', 'load', '-i', path]);
+    const output = await command.execute();
+    return validateCommandOutput(output);
+}
