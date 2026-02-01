@@ -5,6 +5,7 @@
     import { Button } from '$lib/components/ui/button';
     import UploadIcon from '@lucide/svelte/icons/upload';
     import CircleAlert from '@lucide/svelte/icons/circle-alert';
+    import Loader from '@lucide/svelte/icons/loader';
     import { toast } from 'svelte-sonner';
     import { slide } from 'svelte/transition';
     import { importImageFromTar } from '$lib/services/containerization/images';
@@ -16,7 +17,8 @@
     let { show = $bindable(false) }: Props = $props();
 
     let states = $state({
-        error: ''
+        error: '',
+        importing: false
     });
 
     async function selectFilePath() {
@@ -31,7 +33,7 @@
                 description: 'You need to select a image tar archive.'
             });
         }
-
+        states.importing = true;
         toast.promise(importImageFromTar(file), {
             position: 'top-right',
             loading: 'Importing image from tar archive...',
@@ -43,6 +45,7 @@
                 return states.error;
             },
             finally: () => {
+                states.importing = false;
                 show = false;
             }
         });
@@ -74,6 +77,7 @@
         </Dialog.Header>
         <Button
             variant="ghost"
+            disabled={states.importing}
             onclick={selectFilePath}
             class="border-border hover:bg-accent/25 flex h-48 w-full place-items-center justify-center rounded-lg border-2 border-dashed p-6 transition-all hover:cursor-pointer aria-disabled:opacity-50 aria-disabled:hover:cursor-not-allowed"
         >
@@ -81,11 +85,19 @@
                 <div
                     class="border-border text-muted-foreground flex size-14 place-items-center justify-center rounded-full border border-dashed"
                 >
-                    <UploadIcon class="size-7" />
+                    {#if states.importing}
+                        <Loader class="size-7 animate-spin" />
+                    {:else }
+                        <UploadIcon class="size-7" />
+                    {/if}
                 </div>
                 <div class="flex flex-col gap-0.5 text-center">
                     <span class="text-muted-foreground font-medium">
-                        Click to select image tar archive
+                        {#if states.importing}
+                            Loading...
+                        {:else }
+                            Click to select image tar archive
+                        {/if}
                     </span>
                 </div>
             </div>
