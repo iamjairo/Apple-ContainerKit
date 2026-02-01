@@ -85,6 +85,6 @@
 </script>
 
 <ModeWatcher defaultMode="light" track={true} defaultTheme="perpetuity" />
-<Toaster theme={mode.current} richColors={true} closeButton={true} position="top-right" />
+<Toaster theme={mode.current} richColors={true} closeButton={true} position="bottom-right" />
 
 {@render children()}

@@ -1,5 +1,5 @@
 import { FiniteStateMachine } from 'runed';
-import { UseBoolean } from '$lib/stores/hooks/use-boolean.svelte';
+import { UseBoolean } from '$lib/hooks/use-boolean.svelte.js';
 
 type MyStates = 'running' | 'stopped';
 type MyEvents = 'toggle' | 'stop' | 'start';

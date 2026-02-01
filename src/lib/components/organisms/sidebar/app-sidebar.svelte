@@ -8,7 +8,7 @@
     import Cog from '@lucide/svelte/icons/cog';
     import Moon from '@lucide/svelte/icons/moon';
     import Sun from '@lucide/svelte/icons/sun';
-    import { type Theme, themes } from '$lib/helpers/themes-data.js';
+    import { themes } from '$lib/helpers/themes-data.js';
     const data = {
         themes,
         pages: [
@@ -140,13 +140,13 @@
             </Sidebar.MenuItem>
             <Sidebar.MenuItem>
                 <Sidebar.MenuButton onclick={handleModeChange}>
-                    {#if mode.current === 'light'}
+                    {#if mode.current === 'dark'}
                         <Moon class="h-5 w-5" />
                     {:else}
                         <Sun class="h-6 w-[1.3rem]" />
                     {/if}
                     <span class="sr-only">Toggle theme</span>
-                    <span>{mode.current === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+                    <span>{mode.current === 'dark' ? 'Dark Mode' : 'Light Mode'}</span>
                 </Sidebar.MenuButton>
             </Sidebar.MenuItem>
         </Sidebar.Menu>

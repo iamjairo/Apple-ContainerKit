@@ -80,7 +80,7 @@
 <div
     transition:slide={{ axis: 'x' }}
     class={cn(
-        'group flex items-center gap-2 px-3 py-2 text-sm border-r border-border transition-colors whitespace-nowrap cursor-pointer min-h-[40px]',
+        'group flex items-center gap-2 px-3 py-2 text-sm border-r border-border transition-all whitespace-nowrap cursor-pointer min-h-[40px]',
         active
             ? 'bg-secondary text-secondary-foreground'
             : 'text-muted-foreground hover:text-foreground hover:bg-background/50',
@@ -102,7 +102,7 @@
         >
             <Input
                 value={editingValue}
-                class="h-6 px-2 py-0 text-xs w-24 focus:w-32 transition-all"
+                class="h-5 px-2 py-0 text-xs w-24 focus:w-32 transition-all"
                 onkeydown={handleInputKeydown}
                 onblur={handleInputBlur}
                 oninput={handleInputChange}

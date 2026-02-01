@@ -61,28 +61,37 @@
     "fs:allow-data-read-recursive",
     "fs:allow-data-read",
     {
-        "identifier": "fs:allow-exists",
-        "allow": [
-          { "path": "$DATA/*" }
-        ]
+      "identifier": "fs:allow-exists",
+      "allow": [
+        {
+          "path": "$DATA/*"
+        }
+      ]
     },
     "fs:write-all",
     "fs:allow-write-file",
     "fs:write-files",
     {
-        "identifier": "fs:allow-write",
-        "allow": [
-            { "path": "/etc/resolver", "recursive": true }
-        ]
+      "identifier": "fs:allow-write",
+      "allow": [
+        {
+          "path": "/etc/resolver",
+          "recursive": true
+        }
+      ]
     },
     {
-        "identifier": "fs:scope",
-        "allow": [
-          { "path": "/etc/resolver", "recursive": true }
-        ]
+      "identifier": "fs:scope",
+      "allow": [
+        {
+          "path": "/etc/resolver",
+          "recursive": true
+        }
+      ]
     },
     "pty:allow-spawn",
-    "pty:default"
+    "pty:default",
+    "dialog:default"
   ],
   "platforms": [
     "macOS"
