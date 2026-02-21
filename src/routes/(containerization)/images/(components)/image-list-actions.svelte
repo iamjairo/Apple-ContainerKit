@@ -13,6 +13,7 @@
     import { toast } from 'svelte-sonner';
     import type { ContainerClient } from '$lib/models/container';
     import ImageListMoreActions from './image-list-more-actions.svelte';
+    import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
 
     type Props = {
         name: string;
@@ -62,59 +63,57 @@
 </script>
 
 <div class="flex items-center h-full gap-x-0.5">
-    <Tooltip.Provider delayDuration={150}>
-        <Tooltip.Root>
-            <Tooltip.Trigger>
-                {#snippet child({ props })}
-                    <Button
-                        {...props}
-                        variant="secondary"
-                        size="icon"
-                        onclick={showCreateContainerDrawer}
-                        class=""
-                    >
-                        <Box class="text-primary" />
-                    </Button>
-                {/snippet}
-            </Tooltip.Trigger>
-            <Tooltip.Content side="left">Create Container</Tooltip.Content>
-        </Tooltip.Root>
-    </Tooltip.Provider>
-    <Separator orientation="vertical" class="h-5 bg-emerald-600" />
-    <Tooltip.Provider delayDuration={10}>
-        <Tooltip.Root>
-            <Tooltip.Trigger class="bg-destructive">
-                {#snippet child({ props })}
-                    <Button
-                        {...props}
-                        variant="ghost"
-                        size="icon"
-                        class="text-red-400 hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-100"
-                        onclick={deleteImage}
-                    >
-                        <Delete />
-                    </Button>
-                {/snippet}
-            </Tooltip.Trigger>
-            <Tooltip.Content
-                side="top"
-                class="bg-destructive text-destructive-foreground"
-                arrowClasses="bg-destructive"
-            >
-                <p>Delete Image</p>
-            </Tooltip.Content>
-        </Tooltip.Root>
-    </Tooltip.Provider>
-    <Tooltip.Provider delayDuration={10}>
-        <Tooltip.Root>
-            <Tooltip.Trigger>
-                {#snippet child({ props })}
-                    <ImageListMoreActions buttonProps={props}/>
-                {/snippet}
-            </Tooltip.Trigger>
-            <Tooltip.Content side="right">
-                <p>More options</p>
-            </Tooltip.Content>
-        </Tooltip.Root>
-    </Tooltip.Provider>
+    <ButtonGroup.Root>
+        <Tooltip.Provider delayDuration={150}>
+            <Tooltip.Root>
+                <Tooltip.Trigger>
+                    {#snippet child({ props })}
+                        <Button
+                            variant="outline"
+                            {...props}
+                            onclick={showCreateContainerDrawer}
+                        >
+                            <Box class="text-primary"/>
+                        </Button>
+                    {/snippet}
+                </Tooltip.Trigger>
+                <Tooltip.Content side="left">Create Container</Tooltip.Content>
+            </Tooltip.Root>
+        </Tooltip.Provider>
+        <Tooltip.Provider delayDuration={10}>
+            <Tooltip.Root>
+                <Tooltip.Trigger class="">
+                    {#snippet child({ props })}
+                        <Button
+                            {...props}
+                            variant="outline"
+                            size="icon"
+                            onclick={deleteImage}
+                        >
+                            <Delete class="text-destructive"/>
+                        </Button>
+                    {/snippet}
+                </Tooltip.Trigger>
+                <Tooltip.Content
+                    side="top"
+                    class="bg-destructive text-destructive-foreground"
+                    arrowClasses="bg-destructive"
+                >
+                    <p>Delete Image</p>
+                </Tooltip.Content>
+            </Tooltip.Root>
+        </Tooltip.Provider>
+        <Tooltip.Provider delayDuration={10}>
+            <Tooltip.Root>
+                <Tooltip.Trigger>
+                    {#snippet child({ props })}
+                        <ImageListMoreActions buttonProps={props}/>
+                    {/snippet}
+                </Tooltip.Trigger>
+                <Tooltip.Content side="right">
+                    <p>More options</p>
+                </Tooltip.Content>
+            </Tooltip.Root>
+        </Tooltip.Provider>
+    </ButtonGroup.Root>
 </div>

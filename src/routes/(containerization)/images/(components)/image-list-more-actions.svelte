@@ -3,6 +3,7 @@
     import Download from "@lucide/svelte/icons/download";
     import PushToRegistry from "@lucide/svelte/icons/cloud-upload";
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+    import { Button } from '$lib/components/ui/button/index.js';
     import { toast } from 'svelte-sonner';
     import { downloadDir } from '@tauri-apps/api/path';
     import { openDynamicDialog } from "$lib/components/molecules/dynamic-dialog.svelte"
@@ -48,9 +49,18 @@
 
 <DropdownMenu.Root>
     <DropdownMenu.Trigger {...buttonProps}>
-        <MoreHorizontal />
+        {#snippet child({ props })}
+            <Button
+                {...props}
+                variant="outline"
+                size="icon"
+                aria-label="More Options"
+            >
+                <MoreHorizontal />
+            </Button>
+        {/snippet}
     </DropdownMenu.Trigger>
-    <DropdownMenu.Content class="w-40" align="end" side="right">
+    <DropdownMenu.Content class="w-40" align="start" side="right">
         <DropdownMenu.Label>Image Actions</DropdownMenu.Label>
         <DropdownMenu.Group>
             <DropdownMenu.Item disabled>
