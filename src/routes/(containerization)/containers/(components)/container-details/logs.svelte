@@ -2,7 +2,6 @@
     import { onDestroy, onMount } from 'svelte';
     import { highlightCode } from '$lib/helpers/highlight-code';
     import { Child, Command } from '@tauri-apps/plugin-shell';
-    import logsText from './test.logs?raw';
     import { dev } from '$app/environment';
 
     type Props = {
@@ -11,8 +10,8 @@
 
     let { id }: Props = $props();
 
-    let processChild: Child | null = $state(null);
-    let logs: string[] = $state(dev ? logsText.split('\n') : []);
+    let childProcess: Child | null = $state(null);
+    let logs: string[] = $state([]);
     let code: string = $state('');
 
     async function streamContainerLogs(): Promise<Child> {
@@ -42,12 +41,12 @@
     });
 
     onMount(async () => {
-        processChild = await streamContainerLogs();
+        childProcess = await streamContainerLogs();
     });
 
     onDestroy(async () => {
-        if (processChild) {
-            await processChild.kill();
+        if (childProcess) {
+            await childProcess.kill();
         }
     });
 </script>

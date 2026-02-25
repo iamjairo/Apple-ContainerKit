@@ -96,7 +96,7 @@
     }
 </script>
 
-<Sidebar.Root {collapsible} {...restProps}>
+<Sidebar.Root {collapsible} {...restProps} >
     <Sidebar.Header>
         <Sidebar.Menu>
             <Sidebar.MenuItem>

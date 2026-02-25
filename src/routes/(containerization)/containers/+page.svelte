@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { ContainerClient } from '$lib/models/container';
     import { onDestroy, onMount } from 'svelte';
-    import ContainerList from './(components)/container-list.svelte';
+    import ContainersPage from './(components)/containers-page.svelte';
     import { columns } from './(components)/columns.svelte';
     import { getAllContainers, removeContainer } from '$lib/services/containerization/containers';
     import { toast } from 'svelte-sonner';
@@ -71,7 +71,7 @@
 <div class="flex flex-1 flex-col">
     <div class="@container/main flex flex-1 flex-col gap-2">
         <div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-            <ContainerList
+            <ContainersPage
                 data={showOnlyRunningContainers ? runningContainers : allContainers}
                 columns={columns({ deleteContainer })}
                 bind:showOnlyRunningContainers

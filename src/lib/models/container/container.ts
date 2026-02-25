@@ -4,6 +4,7 @@ export type ContainerClient = {
     configuration: ContainerConfiguration;
     networks: NetworkAttachment[]; // This seems to be a duplicate or distinct from configuration.networks
     status: 'running' | 'stopped';
+    startedDate: number;
 };
 
 export type ContainerConfiguration = {

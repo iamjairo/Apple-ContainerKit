@@ -1,10 +1,15 @@
 import type { ColumnDef } from '@tanstack/table-core';
+
 import type { ContainerClient } from '$lib/models/container';
 import { renderComponent, renderSnippet } from '$lib/components/ui/data-table';
-import DataTableCheckbox from '$lib/components/atoms/data-table-checkbox.svelte';
+import {
+    DataTableCheckbox,
+    DataTableFeaturedTextCell
+} from '$lib/components/atoms/data-table-extensions/index.js';
 
 import ContainerStatus from './container-status.svelte';
-import ContainerListActions from './container-list-actions.svelte';
+import ContainerActions from './container-actions.svelte';
+import ContainerLastStarted from './container-last-started.svelte';
 import { createRawSnippet } from 'svelte';
 
 type ContainerColumnProps = {
@@ -37,14 +42,14 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
             header: 'ID',
             accessorFn: (row) => row.configuration.id,
             cell: ({ row }) => {
-                const idSnippet = createRawSnippet<[string]>((getId) => {
-                    const status = getId();
-                    return {
-                        render: () => `<p class="w-full">${status}</p>`
-                    };
-                });
-                return renderSnippet(idSnippet, row.getValue('id'));
-            }
+                return renderComponent(DataTableFeaturedTextCell, {
+                    content: row.getValue<string>('id'),
+                    tooltip: row.original.configuration.id,
+                    href: '/containers/' + row.original.configuration.id,
+                    copyFirst: true
+                })
+            },
+            enableHiding: false
         },
         {
             id: 'status',
@@ -53,26 +58,50 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
             cell: ({ row }) => {
                 const status = row.getValue('status') as ContainerClient['status'];
                 return renderComponent(ContainerStatus, { status });
-            }
+            },
+            enableHiding: false
         },
         {
             id: 'image',
             header: 'Image',
-            accessorFn: (row) => row.configuration.image.reference?.split('/')?.at(-1) ?? 'N/A'
+            accessorFn: (row) => row.configuration.image.reference?.split('/')?.at(-1) ?? 'N/A',
+            enableHiding: false
         },
         {
             id: 'host',
             header: 'Host',
-            accessorFn: (row) =>
-                `${row.configuration.hostname}${row.configuration?.dns?.domain === null || row.configuration?.dns?.domain === undefined ? '' : `.${row.configuration.dns.domain}`}`
+            accessorFn: (row) => {
+                console.log(row.configuration.hostname, row.configuration?.dns?.domain);
+                return `${row.configuration.hostname}${row.configuration?.dns?.domain === null || row.configuration?.dns?.domain === undefined ? '' : `.${row.configuration.dns.domain}`}`
+            }
+                ,
+            cell: ({ row }) => {
+                const content = row.getValue<string>('host');
+                return renderComponent(DataTableFeaturedTextCell, {
+                    content: row.getValue<string>('host'),
+                    tooltip: row.original.configuration.hostname,
+                    copyFirst: true
+                })
+            }
         },
         {
             id: 'network',
             header: 'Network',
+            enableHiding: true,
             accessorFn: (row) =>
                 row.networks?.length > 0
                     ? row.networks?.map((network) => network.address?.split('/')?.[0]).join(', ')
                     : 'N/A'
+        },
+        {
+            id: 'lastStarted',
+            header: 'Last Started',
+            accessorFn: (row) => row.startedDate,
+            cell: ({ row }) => {
+                return renderComponent(ContainerLastStarted, {
+                    lastStarted: row.original.startedDate
+                });
+            }
         },
         {
             id: 'actions',
@@ -80,12 +109,13 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
             cell: ({ row }) => {
                 const id = row.getValue('id') as ContainerClient['configuration']['id'];
                 const status = row.getValue('status') as ContainerClient['status'];
-                return renderComponent(ContainerListActions, {
+                return renderComponent(ContainerActions, {
                     status,
                     id,
                     deleteContainer
                 });
-            }
+            },
+            enableHiding: false
         }
     ];
 }
