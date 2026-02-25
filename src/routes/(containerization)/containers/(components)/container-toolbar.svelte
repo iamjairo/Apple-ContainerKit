@@ -9,7 +9,7 @@
 
 <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
-        <DataTableExtensions.SearchInput {table} />
+        <DataTableExtensions.SearchInput {table} columnToFilter="id" placeholder="Search container..."/>
         <div class="flex items-center space-x-2">
             <Switch
                 disabled={!showOnlyRunningContainers && table.getRowCount() === 0}

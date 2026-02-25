@@ -15,13 +15,20 @@ export type ContainerConfiguration = {
     sysctls: Record<string, never>; // Or a more specific type if sysctls can have properties
     platform: ContainerPlatform;
     rosetta: boolean;
-    networks: string[];
+    networks: ContainerConfigurationNetwork[];
     labels: Record<string, never>; // Or a more specific type if labels can have properties
     id: string;
     mounts: string[]; // Or a more specific type if mounts can have properties
     runtimeHandler: string;
     initProcess: ContainerInitProcess;
 };
+
+export type ContainerConfigurationNetwork = {
+    "options": {
+        "hostname": string;
+    },
+    "network": string
+}
 
 export type ContainerInitProcess = {
     rlimits: string[]; // Or a more specific type if rlimits can have properties
@@ -60,8 +67,14 @@ export type NetworkAttachment = {
     network: string;
     /// The hostname associated with the attachment.
     hostname: string;
+    /// The MAC address of the container interface.
+    macAddress: string;
+    /// The subnet CIDR, where the address is the container interface IPv6 address.
+    ipv6Address: string;
     /// The subnet CIDR, where the address is the container interface IPv4 address.
-    address: string;
+    ipv4Address: string;
     /// The IPv4 gateway address.
-    gateway: string;
+    ipv4Gateway: string;
+    /// The network interface's IP address in the container.
+
 };

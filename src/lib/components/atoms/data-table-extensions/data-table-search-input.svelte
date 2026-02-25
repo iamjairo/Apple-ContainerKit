@@ -5,7 +5,7 @@
     import Search from '@lucide/svelte/icons/search';
     import type { Table } from '@tanstack/table-core';
 
-    let { table }: { table: Table<TData> } = $props();
+    let { table, columnToFilter, placeholder = 'Search...' }: { table: Table<TData>, columnToFilter: string, placeholder: string} = $props();
 
     let searchInputBox: HTMLInputElement | null = $state(null);
     let showKeyboardShortcut = $state(true);
@@ -28,14 +28,14 @@
     <Input
         bind:ref={searchInputBox}
         type="text"
-        placeholder="Search containers..."
-        value={(table.getColumn("id")?.getFilterValue()) ?? ""}
+        { placeholder }
+        value={(table.getColumn(columnToFilter)?.getFilterValue()) ?? ""}
         oninput={(e) => {
-				    table.getColumn("id")?.setFilterValue(e.currentTarget.value);
+				    table.getColumn(columnToFilter)?.setFilterValue(e.currentTarget.value);
 			    }}
         onkeydown={(e) => {
                     if (e.key === 'Enter') {
-                        table.getColumn('id')?.setFilterValue(e.currentTarget.value);
+                        table.getColumn(columnToFilter)?.setFilterValue(e.currentTarget.value);
                     }
                     if (e.key === 'Escape') {
                         searchInputBox?.blur()

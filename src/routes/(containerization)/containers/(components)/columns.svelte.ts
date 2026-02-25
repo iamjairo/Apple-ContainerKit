@@ -88,10 +88,26 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
             id: 'network',
             header: 'Network',
             enableHiding: true,
-            accessorFn: (row) =>
-                row.networks?.length > 0
-                    ? row.networks?.map((network) => network.address?.split('/')?.[0]).join(', ')
-                    : 'N/A'
+            accessorFn: (row) =>{
+                const status = row.status;
+                if (status === 'stopped' || !row.networks.length) {
+                    return 'N/A';
+                }
+
+                const IPv4Addresses = row.networks
+                    .map((network) => network.ipv4Address?.split('/')?.[0])
+                    .filter(Boolean);
+
+                return IPv4Addresses.length > 0 ? IPv4Addresses.join(', ') : 'N/A';
+            },
+            cell: ({ row }) => {
+                const content = row.getValue('network') as ContainerClient['networks'][number]['ipv4Address'];
+                return renderComponent(DataTableFeaturedTextCell, {
+                    content: content,
+                    tooltip: content,
+                    copy: content !== 'N/A'
+                });
+            }
         },
         {
             id: 'lastStarted',

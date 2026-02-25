@@ -5,6 +5,7 @@
     import Delete from '@lucide/svelte/icons/trash-2';
     import Box from '@lucide/svelte/icons/box';
     import ListIndentIncrease from '@lucide/svelte/icons/list-indent-increase';
+    import Play from '@lucide/svelte/icons/play';
     import { createContainerDrawerData } from './images.svelte';
     import { confirmDelete } from '$lib/components/ui/confirm-delete-dialog';
     import { removeImage } from '$lib/services/containerization/images';
@@ -73,11 +74,11 @@
                             {...props}
                             onclick={showCreateContainerDrawer}
                         >
-                            <Box class="text-primary"/>
+                            <Play class="text-green-700 dark:text-green-400"/>
                         </Button>
                     {/snippet}
                 </Tooltip.Trigger>
-                <Tooltip.Content side="left">
+                <Tooltip.Content arrowClasses="bg-green-900" side="left" class="bg-green-900 text-green-100">
                     Create Container
                 </Tooltip.Content>
             </Tooltip.Root>
