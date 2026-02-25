@@ -4,14 +4,17 @@
     import Delete from '@lucide/svelte/icons/trash-2';
     import Loader from '@lucide/svelte/icons/loader';
     import Information from '@lucide/svelte/icons/sliders-horizontal';
+
     import { toast } from 'svelte-sonner';
+
     import type { ContainerClient } from '$lib/models/container';
 
+    import * as ButtonGroup from "$lib/components/ui/button-group/index.js";
     import { Button } from '$lib/components/ui/button';
     import * as Tooltip from '$lib/components/ui/tooltip';
     import { Separator } from '$lib/components/ui/separator';
     import { startContainer, stopContainer } from '$lib/services/containerization/containers';
-    import DeleteContainerDialog from './delete-container-dialog.svelte';
+    import ContainerDeleteDialog from './container-delete-dialog.svelte';
     import InformationDrawer from './information-drawer.svelte';
 
     type Props = {
@@ -53,77 +56,74 @@
 </script>
 
 <div class="flex items-center h-full">
-    <Tooltip.Provider delayDuration={150}>
-        <Tooltip.Root>
-            <Tooltip.Trigger>
-                {#snippet child({ props })}
-                    <Button
-                        {...props}
-                        variant="ghost"
-                        size="icon"
-                        onclick={handleContainerRunningState}
-                        class={[
-                            status === 'stopped'
-                                ? 'text-green-400'
-                                : 'text-red-400 hover:bg-red-100 hover:text-red-400'
-                        ]}
-                        disabled={disableActions}
-                    >
-                        {#if status === 'running'}
-                            <CircleStop />
-                        {:else if startingContainer}
-                            <Loader class="animate-spin" />
-                        {:else}
-                            <CirclePlay />
-                        {/if}
-                    </Button>
-                {/snippet}
-            </Tooltip.Trigger>
-            <Tooltip.Content side="left">
-                <p>{status === 'running' ? 'Stop' : 'Start'}</p>
-            </Tooltip.Content>
-        </Tooltip.Root>
-    </Tooltip.Provider>
-
-    <Separator orientation="vertical" class="h-5" />
-
-    {#if status === 'stopped'}
-        <Tooltip.Provider delayDuration={10}>
-            <Tooltip.Root>
-                <Tooltip.Trigger class="bg-destructive">
-                    {#snippet child({ props })}
-                        <Button
-                            {...props}
-                            variant="ghost"
-                            size="icon"
-                            class="text-red-400 hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-100"
-                            disabled={disableActions}
-                            onclick={() => (showDeleteDialog = true)}
-                        >
-                            <Delete />
-                        </Button>
-                    {/snippet}
-                </Tooltip.Trigger>
-                <Tooltip.Content
-                    side="right"
-                    class="bg-destructive text-destructive-foreground"
-                    arrowClasses="bg-destructive"
-                >
-                    <p>Delete</p>
-                </Tooltip.Content>
-            </Tooltip.Root>
-        </Tooltip.Provider>
-        <DeleteContainerDialog bind:open={showDeleteDialog} {handleDeleteContainer} {id} />
-    {/if}
-
-    {#if status === 'running'}
+    <ButtonGroup.Root>
         <Tooltip.Provider delayDuration={150}>
             <Tooltip.Root>
                 <Tooltip.Trigger>
                     {#snippet child({ props })}
                         <Button
                             {...props}
-                            variant="ghost"
+                            variant="outline"
+                            size="icon"
+                            onclick={handleContainerRunningState}
+                            class={[
+                                status === 'stopped'
+                                    ? 'text-green-400'
+                                    : 'text-red-400 hover:bg-red-100 hover:text-red-400'
+                            ]}
+                            disabled={disableActions}
+                        >
+                            {#if status === 'running'}
+                                <CircleStop />
+                            {:else if startingContainer}
+                                <Loader class="animate-spin" />
+                            {:else}
+                                <CirclePlay />
+                            {/if}
+                        </Button>
+                    {/snippet}
+                </Tooltip.Trigger>
+                <Tooltip.Content side="left">
+                    <p>{status === 'running' ? 'Stop' : 'Start'}</p>
+                </Tooltip.Content>
+            </Tooltip.Root>
+        </Tooltip.Provider>
+        {#if status === 'stopped'}
+            <Tooltip.Provider delayDuration={10}>
+                <Tooltip.Root>
+                    <Tooltip.Trigger class="bg-destructive">
+                        {#snippet child({ props })}
+                            <Button
+                                {...props}
+                                variant="outline"
+                                size="icon"
+                                disabled={disableActions}
+                                onclick={() => (showDeleteDialog = true)}
+                            >
+                                <Delete class="text-destructive"/>
+                            </Button>
+                        {/snippet}
+                    </Tooltip.Trigger>
+                    <Tooltip.Content
+                        side="right"
+                        class="bg-destructive text-destructive-foreground"
+                        arrowClasses="bg-destructive"
+                    >
+                        <p>Delete</p>
+                    </Tooltip.Content>
+                </Tooltip.Root>
+            </Tooltip.Provider>
+            <ContainerDeleteDialog bind:open={showDeleteDialog} {handleDeleteContainer} {id} />
+        {/if}
+
+        {#if status === 'running'}
+        <Tooltip.Provider delayDuration={150}>
+            <Tooltip.Root>
+                <Tooltip.Trigger>
+                    {#snippet child({ props })}
+                        <Button
+                            {...props}
+                            variant="outline"
                             size="icon"
                             onclick={handleShowInformationDrawer}
                             disabled={disableActions}
@@ -132,11 +132,12 @@
                         </Button>
                     {/snippet}
                 </Tooltip.Trigger>
-                <Tooltip.Content side="left">
-                    <p>Logs</p>
+                <Tooltip.Content side="right">
+                    <p>Container details</p>
                 </Tooltip.Content>
             </Tooltip.Root>
         </Tooltip.Provider>
         <InformationDrawer bind:open={showInformationDrawer} {id} />
     {/if}
+    </ButtonGroup.Root>
 </div>

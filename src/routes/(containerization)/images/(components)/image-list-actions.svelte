@@ -77,7 +77,9 @@
                         </Button>
                     {/snippet}
                 </Tooltip.Trigger>
-                <Tooltip.Content side="left">Create Container</Tooltip.Content>
+                <Tooltip.Content side="left">
+                    Create Container
+                </Tooltip.Content>
             </Tooltip.Root>
         </Tooltip.Provider>
         <Tooltip.Provider delayDuration={10}>
@@ -110,7 +112,7 @@
                         <ImageListMoreActions buttonProps={props}/>
                     {/snippet}
                 </Tooltip.Trigger>
-                <Tooltip.Content side="right">
+                <Tooltip.Content side="right" class="bg-secondary text-secondary-foreground" arrowClasses="bg-secondary">
                     <p>More options</p>
                 </Tooltip.Content>
             </Tooltip.Root>

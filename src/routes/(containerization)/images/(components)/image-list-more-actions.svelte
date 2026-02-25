@@ -60,7 +60,7 @@
             </Button>
         {/snippet}
     </DropdownMenu.Trigger>
-    <DropdownMenu.Content class="w-40" align="start" side="right">
+    <DropdownMenu.Content class="w-40" align="start">
         <DropdownMenu.Label>Image Actions</DropdownMenu.Label>
         <DropdownMenu.Group>
             <DropdownMenu.Item disabled>
