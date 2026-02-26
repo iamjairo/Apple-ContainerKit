@@ -71,16 +71,22 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
             id: 'host',
             header: 'Host',
             accessorFn: (row) => {
-                console.log(row.configuration.hostname, row.configuration?.dns?.domain);
-                return `${row.configuration.hostname}${row.configuration?.dns?.domain === null || row.configuration?.dns?.domain === undefined ? '' : `.${row.configuration.dns.domain}`}`
-            }
-                ,
+                const status = row.status;
+                if (status === 'stopped' || !row.networks.length) {
+                    return 'N/A';
+                }
+
+                const hostnames = row.networks
+                    .map((network) => network.hostname)
+                    .filter(Boolean);
+                return hostnames.length > 0 ? hostnames.at(0)?.endsWith('.') ? hostnames.at(0)?.slice(0, -1) : hostnames.at(0): 'N/A';
+            },
             cell: ({ row }) => {
                 const content = row.getValue<string>('host');
                 return renderComponent(DataTableFeaturedTextCell, {
-                    content: row.getValue<string>('host'),
-                    tooltip: row.original.configuration.hostname,
-                    copyFirst: true
+                    content: content,
+                    tooltip: content === 'N/A' ? '' : content,
+                    copy: content !== 'N/A'
                 })
             }
         },
@@ -98,7 +104,7 @@ export function columns({ deleteContainer }: ContainerColumnProps): ColumnDef<Co
                     .map((network) => network.ipv4Address?.split('/')?.[0])
                     .filter(Boolean);
 
-                return IPv4Addresses.length > 0 ? IPv4Addresses.join(', ') : 'N/A';
+                return IPv4Addresses.length > 0 ? IPv4Addresses.at(0) : 'N/A';
             },
             cell: ({ row }) => {
                 const content = row.getValue('network') as ContainerClient['networks'][number]['ipv4Address'];
