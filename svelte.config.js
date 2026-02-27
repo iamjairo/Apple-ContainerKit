@@ -9,6 +9,12 @@ const config = {
         alias: {
             '$/*': './path/to/lib/*'
         },
+        prerender: {
+            handleUnseenRoutes: ({ routes }) => {
+                console.warn(`Route not found during prerendering: ${routes.join(',')}`);
+                return;
+            }
+        }
     },
     compilerOptions: {
         experimental: {
