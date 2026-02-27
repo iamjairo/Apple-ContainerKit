@@ -1,5 +1,6 @@
-import { BaseDirectory, type UnwatchFn, watch, type WatchEvent } from '@tauri-apps/plugin-fs';
+import { BaseDirectory, type UnwatchFn, watch, type WatchEvent , watchImmediate} from '@tauri-apps/plugin-fs';
 import { CONTAINER_APP_DATA_DIR } from '$lib/helpers/constants';
+import { boolean } from 'zod';
 
 /**
  * Create a managed watcher that automatically tracks itself for cleanup
@@ -9,10 +10,12 @@ async function createManagedWatcher(
     callback: (event: WatchEvent) => void | Promise<void>,
     delayMs: number,
     recursive: boolean = false,
-    baseDirectory?: BaseDirectory
+    baseDirectory?: BaseDirectory,
+    immediate: boolean = false
 ): Promise<UnwatchFn> {
     try {
-        const unwatchFn = watch(
+        const watchFn = immediate ? watchImmediate : watch;
+        const unwatchFn = watchFn(
             relativePath,
             async (event) => {
                 try {
@@ -44,10 +47,12 @@ export async function watchContainerDataDir(
     path: string,
     callback: (event: WatchEvent) => void | Promise<void>,
     delayMs: number = 1000,
-    recursive: boolean = false
+    recursive: boolean = false,
+    immediate: boolean = false
 ): Promise<UnwatchFn> {
     const fullPath = `${CONTAINER_APP_DATA_DIR}/${path}`;
-    return createManagedWatcher(fullPath, callback, delayMs, recursive, BaseDirectory.Data);
+    console.log(`Setting up watcher for container data directory at path: ${fullPath}`);
+    return createManagedWatcher(fullPath, callback, delayMs, recursive, BaseDirectory.Data, immediate);
 }
 
 /**

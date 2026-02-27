@@ -2,7 +2,10 @@
     import { onDestroy, onMount } from 'svelte';
     import { highlightCode } from '$lib/helpers/highlight-code';
     import { Child, Command } from '@tauri-apps/plugin-shell';
-    import { dev } from '$app/environment';
+    import { watchContainerDir, watchContainerLogFile } from '$lib/services/fs-events/containers';
+    import type { UnwatchFn } from '@tauri-apps/plugin-fs';
+    import { getContainerLogs } from '$lib/services/containerization/containers';
+    import { toast } from 'svelte-sonner';
 
     type Props = {
         id: string;
@@ -10,26 +13,35 @@
 
     let { id }: Props = $props();
 
+    let containerLogFileWatcher: UnwatchFn | null = $state(null);
+
     let childProcess: Child | null = $state(null);
     let logs: string[] = $state([]);
     let code: string = $state('');
 
-    async function streamContainerLogs(): Promise<Child> {
-        const command = Command.create('container', ['logs', id, '-f'], {
-            encoding: 'utf8'
-        });
-        command.on('close', (data) => {
-            console.log(`command finished with code ${data.code} and signal ${data.signal}`);
-        });
-        command.on('error', (error) => console.error(`command error: "${error}"`));
-        command.stdout.on('data', (line) => logs.push(line));
-        command.stderr.on('data', (line) => logs.push(line));
-        const child = await command.spawn();
-        return child;
+    async function streamContainerLogs() {
+        console.log('called ik');
+        const output = await getContainerLogs(id)
+        if (output && output.stdout) {
+            const logLines = output.stdout.split('\n');
+            logs = [...logLines];
+            return
+        }
+
+        if (output && output.stderr) {
+            toast.error(output.stderr);
+        }
     }
+
+    onMount(async () => {
+        await streamContainerLogs();
+        // containerLogFileWatcher = await watchContainerLogFile(id, streamContainerLogs);
+        containerLogFileWatcher = await watchContainerDir(id, streamContainerLogs);
+    });
 
     $effect(() => {
         async function updateHighlightedCode() {
+            console.log('logs updated', logs);
             if (logs.length > 0) {
                 code = await highlightCode(logs.join('\n'));
             } else {
@@ -40,13 +52,13 @@
         updateHighlightedCode();
     });
 
-    onMount(async () => {
-        childProcess = await streamContainerLogs();
-    });
+    // onMount(async () => {
+    //     childProcess = await streamContainerLogs();
+    // });
 
     onDestroy(async () => {
-        if (childProcess) {
-            await childProcess.kill();
+        if (containerLogFileWatcher) {
+            containerLogFileWatcher();
         }
     });
 </script>

@@ -36,6 +36,12 @@ export async function inspectContainer(id: string): Promise<Output> {
     return validateCommandOutput(output);
 }
 
+export async function getContainerLogs(id: string): Promise<Output> {
+    const command = createContainerCommand(['logs', id]);
+    const output = await command.execute();
+    return validateCommandOutput(output);
+}
+
 // export async function getContainerLogs(id: string): Promise<Output> {
 //     const command = createContainerCommand(['ls', id]);
 // }
