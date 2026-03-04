@@ -5,7 +5,7 @@
 
 **A modern desktop application for Apple container management**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Built with Tauri](https://img.shields.io/badge/Built%20with-Tauri-24C8DB?logo=tauri)](https://tauri.app)
 [![Svelte 5](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte)](https://svelte.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript)](https://www.typescriptlang.org)
@@ -70,16 +70,16 @@ _Beautiful overview of your container ecosystem_
 ![Dashboard](static/preview/containers.png)
 
 ### Terminal Integration
+
 _Integrated terminal for advanced container commands_
 
 ![Terminal Integration](static/preview/terminal.png)
 
 ### Settings & Configuration
 
-[//]: # (_Comprehensive configuration options_)
-
-[//]: # ()
-[//]: # (![Settings]&#40;docs/images/settings-preview.png&#41;)
+[//]: # '_Comprehensive configuration options_'
+[//]: #
+[//]: # '![Settings](docs/images/settings-preview.png)'
 
 ## 🚀 Installation
 
