@@ -16,9 +16,7 @@
         "db:generate": "drizzle-kit generate && pnpm db:migrations:rust",
         "db:migrations:rust": "tsx scripts/generate-migrations.ts",
         "script:download-apple-container": "./scripts/download-apple-container-cli.sh",
-        "script:container-symlink": "./scripts/symlink.sh",
-        "license:apply": "license-check-and-add add -f license-config.json",
-        "prepare": "husky"
+        "script:container-symlink": "./scripts/symlink.sh"
     },
     "license": "Apache-2.0",
     "dependencies": {
@@ -68,10 +66,8 @@
         "d3-scale": "^4.0.2",
         "d3-shape": "^3.2.0",
         "drizzle-kit": "^0.31.4",
-        "husky": "^9.1.7",
         "jsrepo": "^3.0.5",
         "layerchart": "2.0.0-next.14",
-        "license-check-and-add": "^4.0.5",
         "mode-watcher": "^1.1.0",
         "paneforge": "^1.0.2",
         "prettier": "^3.6.2",
