@@ -5,7 +5,6 @@
     import Search from '@lucide/svelte/icons/search';
     import type { Table } from '@tanstack/table-core';
 
-    type GenericTable = Table<TData>;
     type ColumnToFilter = ReturnType<typeof table.getAllColumns>[number]['id']
 
     let { table, columnToFilter, placeholder = 'Search...' }: { table: Table<TData>, columnToFilter: ColumnToFilter, placeholder: string} = $props();

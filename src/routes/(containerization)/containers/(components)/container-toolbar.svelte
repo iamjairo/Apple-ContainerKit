@@ -10,14 +10,16 @@
 <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
         <DataTableExtensions.SearchInput {table} columnToFilter="id" placeholder="Search container..."/>
+    </div>
+    <div class="flex flex-row items-center gap-x-4">
         <div class="flex items-center space-x-2">
+            <Label for="running-containers-only">Running Containers Only</Label>
             <Switch
                 disabled={!showOnlyRunningContainers && table.getRowCount() === 0}
                 id="running-containers-only"
                 bind:checked={showOnlyRunningContainers}
             />
-            <Label for="running-containers-only">Running Containers Only</Label>
         </div>
+        <DataTableExtensions.ViewOptions {table} />
     </div>
-    <DataTableExtensions.ViewOptions {table} />
 </div>

@@ -18,7 +18,7 @@
         <Settings2Icon />
         { title ?? 'View' }
     </DropdownMenu.Trigger>
-    <DropdownMenu.Content>
+    <DropdownMenu.Content side="left">
         <DropdownMenu.Group>
             <DropdownMenu.Label>Toggle columns</DropdownMenu.Label>
             <DropdownMenu.Separator />
@@ -26,6 +26,7 @@
                 .getAllColumns()
                 .filter((col) => typeof col.accessorFn !== "undefined" && col.getCanHide()) as column (column)}
                 <DropdownMenu.CheckboxItem
+                    closeOnSelect={false}
                     bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
                     class="capitalize"
                 >

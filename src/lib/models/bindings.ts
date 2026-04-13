@@ -5,9 +5,6 @@
 
 
 export const commands = {
-async greet(name: string) : Promise<string> {
-    return await TAURI_INVOKE("greet", { name });
-},
 async runContainerCommandWithStdin(args: string[], stdin: string) : Promise<Result<CommandResult, string>> {
     try {
     return { status: "ok", data: await TAURI_INVOKE("run_container_command_with_stdin", { args, stdin }) };

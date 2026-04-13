@@ -13,18 +13,11 @@ mod types;
 
 include!(concat!("../migrations", "/generated_migrations.rs"));
 
-#[tauri::command]
-#[specta::specta]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub async fn run() {
     let migrations = load_migrations();
 
     let spectabuilder = Builder::<tauri::Wry>::new().commands(collect_commands![
-        greet,
         run_container_command_with_stdin,
         execute_with_elevated_command,
         get_default_shell,
@@ -49,7 +42,7 @@ pub async fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_pty::init())
         .plugin(tauri_plugin_window_state::Builder::new().build())
-        //         .plugin(tauri_plugin_persisted_scope::init())
+        .plugin(tauri_plugin_persisted_scope::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         //         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_store::Builder::new().build())
