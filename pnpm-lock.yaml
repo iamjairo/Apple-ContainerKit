@@ -57,8 +57,8 @@ importers:
         specifier: ^17.2.3
         version: 17.2.3
       drizzle-orm:
-        specifier: ^0.44.3
-        version: 0.44.3(@libsql/client@0.15.10)(gel@2.1.1)
+        specifier: ^0.45.2
+        version: 0.45.2(@libsql/client@0.15.10)(gel@2.1.1)
       pretty-bytes:
         specifier: ^7.1.0
         version: 7.1.0
@@ -71,7 +71,7 @@ importers:
     devDependencies:
       '@dnd-kit-svelte/core':
         specifier: latest
-        version: 0.0.8(svelte@5.51.3)
+        version: 0.0.11(svelte@5.51.3)
       '@dnd-kit-svelte/modifiers':
         specifier: ^0.0.8
         version: 0.0.8(svelte@5.51.3)
@@ -237,11 +237,6 @@ packages:
 
   '@dnd-kit-svelte/core@0.0.11':
     resolution: {integrity: sha512-bVqutZhSOk3nQsjwJ0SveUrPeBgUO/wajfon1AiKA8mxfQhaUG97CfoQLs7tLW3YxSkHkLPhYRw9WQat7OMB7g==}
-    peerDependencies:
-      svelte: ^5.0.0
-
-  '@dnd-kit-svelte/core@0.0.8':
-    resolution: {integrity: sha512-c77kG70L2DX+af9NW7EbbByKXcHF4y+8sqbZjj81N6QnAtdqrfZdQug/39qSMC3hxLkiS1UowVhSQRJgpdFWGA==}
     peerDependencies:
       svelte: ^5.0.0
 
@@ -783,8 +778,8 @@ packages:
   '@oxc-project/types@0.96.0':
     resolution: {integrity: sha512-r/xkmoXA0xEpU6UGtn18CNVjXH6erU3KCpCDbpLmbVxBFor1U9MqN5Z2uMmCHJuXjJzlnDR+hWY+yPoLo8oHDw==}
 
-  '@petamoriken/float16@3.9.2':
-    resolution: {integrity: sha512-VgffxawQde93xKxT3qap3OH+meZf7VaSB5Sqd4Rqc+FP5alWbpOyan/7tRbOAvynjpG3GpdtAuGU/NdhQpmrog==}
+  '@petamoriken/float16@3.9.3':
+    resolution: {integrity: sha512-8awtpHXCx/bNpFt4mt2xdkgtgVvKqty8VbjHI/WWWQuEw+KLzFot3f4+LkQY9YmOtq7A5GdOnqoIC8Pdygjk2g==}
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
@@ -1243,6 +1238,7 @@ packages:
   '@xmldom/xmldom@0.8.11':
     resolution: {integrity: sha512-cQzWCtO6C8TQiYl1ruKNn2U6Ao4o4WBBcbL61yJl84x+j5sOWWFU9X7DpND8XZG3daDppSsigMdfAIl2upQBRw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@xterm/addon-attach@0.11.0':
     resolution: {integrity: sha512-JboCN0QAY6ZLY/SSB/Zl2cQ5zW1Eh4X3fH7BnuR1NB7xGRhzbqU2Npmpiw/3zFlxDaU88vtKzok44JKi2L2V2Q==}
@@ -1520,8 +1516,8 @@ packages:
     resolution: {integrity: sha512-tCPWVZWZqWVx2XUsVpJRnH9Mx0ClVOf5YUHerZ5so1OKSlqww4zy1R5ksEdGRcO3tM3zj0PYN6V48TbQCL1RfA==}
     hasBin: true
 
-  drizzle-orm@0.44.3:
-    resolution: {integrity: sha512-8nIiYQxOpgUicEL04YFojJmvC4DNO4KoyXsEIqN44+g6gNBr6hmVpWk3uyAt4CaTiRGDwoU+alfqNNeonLAFOQ==}
+  drizzle-orm@0.45.2:
+    resolution: {integrity: sha512-kY0BSaTNYWnoDMVoyY8uxmyHjpJW1geOmBMdSSicKo9CIIWkSxMIj2rkeSR51b8KAPB7m+qysjuHme5nKP+E5Q==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -1700,9 +1696,9 @@ packages:
   is-reference@3.0.3:
     resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
 
-  isexe@3.1.1:
-    resolution: {integrity: sha512-LpB/54B+/2J5hqQ7imZHfdU31OlgQqx7ZicVlkm9kzg9/w8GKLEcFfJl/t7DCEDueOyBAD6zCCwTO6Fzs0NoEQ==}
-    engines: {node: '>=16'}
+  isexe@3.1.5:
+    resolution: {integrity: sha512-6B3tLtFqtQS4ekarvLVMZ+X+VlvQekbe4taUkf/rhVO3d/h0M2rfARm/pXLcPEsjjMsFgrFgSrhQIxcSVrBz8w==}
+    engines: {node: '>=18'}
 
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
@@ -2034,8 +2030,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  semver@7.7.3:
-    resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
+  semver@7.7.4:
+    resolution: {integrity: sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -2329,14 +2325,6 @@ snapshots:
       svelte: 5.51.3
 
   '@dnd-kit-svelte/core@0.0.11(svelte@5.51.3)':
-    dependencies:
-      '@dnd-kit-svelte/accessibility': 0.0.11(svelte@5.51.3)
-      '@dnd-kit-svelte/utilities': 0.0.11(svelte@5.51.3)
-      runed: 0.23.4(svelte@5.51.3)
-      svelte: 5.51.3
-      svelte-toolbelt: 0.7.1(svelte@5.51.3)
-
-  '@dnd-kit-svelte/core@0.0.8(svelte@5.51.3)':
     dependencies:
       '@dnd-kit-svelte/accessibility': 0.0.11(svelte@5.51.3)
       '@dnd-kit-svelte/utilities': 0.0.11(svelte@5.51.3)
@@ -2725,7 +2713,7 @@ snapshots:
 
   '@oxc-project/types@0.96.0': {}
 
-  '@petamoriken/float16@3.9.2':
+  '@petamoriken/float16@3.9.3':
     optional: true
 
   '@polka/url@1.0.0-next.29': {}
@@ -3358,7 +3346,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.3(@libsql/client@0.15.10)(gel@2.1.1):
+  drizzle-orm@0.45.2(@libsql/client@0.15.10)(gel@2.1.1):
     optionalDependencies:
       '@libsql/client': 0.15.10
       gel: 2.1.1
@@ -3456,10 +3444,10 @@ snapshots:
 
   gel@2.1.1:
     dependencies:
-      '@petamoriken/float16': 3.9.2
+      '@petamoriken/float16': 3.9.3
       debug: 4.4.3
       env-paths: 3.0.0
-      semver: 7.7.3
+      semver: 7.7.4
       shell-quote: 1.8.3
       which: 4.0.0
     transitivePeerDependencies:
@@ -3506,7 +3494,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.8
 
-  isexe@3.1.1:
+  isexe@3.1.5:
     optional: true
 
   jiti@2.6.1: {}
@@ -3869,7 +3857,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  semver@7.7.3:
+  semver@7.7.4:
     optional: true
 
   set-cookie-parser@3.0.1: {}
@@ -4106,7 +4094,7 @@ snapshots:
 
   which@4.0.0:
     dependencies:
-      isexe: 3.1.1
+      isexe: 3.1.5
     optional: true
 
   ws@8.18.3: {}
